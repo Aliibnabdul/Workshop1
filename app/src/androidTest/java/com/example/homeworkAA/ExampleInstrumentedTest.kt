@@ -1,4 +1,4 @@
-package com.example.workshop1
+package com.example.homeworkAA
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

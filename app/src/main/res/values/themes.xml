@@ -1,9 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Workshop1" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.HomeworkAA" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimaryVariant">@color/backgroundTransparent</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -12,5 +12,59 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:navigationBarColor">@color/background</item>
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
+
+    <style name="back">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="style12sp">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="name">
+        <item name="android:textSize">40sp</item>
+        <item name="android:textColor">#ECECEC</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="tag">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/ratingBarActivated</item>
+    </style>
+
+    <style name="starsRatingBar" parent="Base.Widget.AppCompat.RatingBar.Small">
+        <item name="android:progressTint">@color/ratingBarActivated</item>
+        <item name="android:secondaryProgressTint">@color/ratingBarActivated</item>
+        <item name="android:progressBackgroundTint">@color/ratingBarNormal</item>
+        <item name="android:isIndicator">false</item>
+    </style>
+
+    <style name="style14sp">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#ECECEC</item>
+    </style>
+
+    <style name="reviews" parent="style14sp">
+        <item name="android:textColor">@color/ratingBarNormal</item>
+    </style>
+
+    <style name="heading" parent="style14sp">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="actorTV">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#D8D8D8</item>
+    </style>
+
+    <style name="corners">
+        <item name="cornerSize">5%</item>
+    </style>
+
 </resources>
