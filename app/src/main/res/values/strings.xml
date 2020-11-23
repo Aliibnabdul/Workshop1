@@ -1,21 +1,17 @@
 <resources>
     <string name="app_name">Homework</string>
-    <string name="mask">mask</string>
-    <string name="_13">13+</string>
-    <string name="contentDescription">contentDescription</string>
+    <string name="movieDetails_ageLimit_13plus">13+</string>
     <string name="back">Back</string>
-    <string name="name">Avengers: \nEnd Game</string>
-    <string name="tag">Action, Adventure, Fantasy</string>
-    <string name="reviews">125 REVIEWS</string>
-    <string name="storyline">Storyline</string>
-    <string name="description">
+    <string name="movieDetails_name">Avengers: \nEnd Game</string>
+    <string name="movieDetails_genre">Action, Adventure, Fantasy</string>
+    <string name="movieDetails_reviews">125 REVIEWS</string>
+    <string name="movieDetails_storyline">Storyline</string>
+    <string name="movieDetails_description">
         After the devastating events of Avengers: Infinity War, the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos\' actions and restore balance to the universe.
     </string>
-    <string name="heading">Cast</string>
-    <string name="full_image">description</string>
-    <string name="some_actor">Some actor</string>
-    <string name="downey">Robert Downey Jr.</string>
-    <string name="evans">Chris Evans</string>
-    <string name="ruffalo">Mark Ruffalo</string>
-    <string name="hemsworth">Chris Hemsworth</string>
+    <string name="movieDetails_cast">Cast</string>
+    <string name="movieDetails_downey">Robert Downey Jr.</string>
+    <string name="movieDetails_evans">Chris Evans</string>
+    <string name="movieDetails_ruffalo">Mark Ruffalo</string>
+    <string name="movieDetails_hemsworth">Chris Hemsworth</string>
 </resources>

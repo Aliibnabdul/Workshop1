@@ -11,29 +11,30 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/backImage"
-            android:layout_width="match_parent"
+            android:id="@+id/ivBackImage"
+            android:layout_width="0dp"
             android:layout_height="298dp"
-            android:contentDescription="@string/contentDescription"
+            android:contentDescription="@string/movieDetails_name"
             android:scaleType="centerCrop"
-            android:src="@drawable/orig"
+            android:src="@drawable/movie_details_back_image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <View
-            android:id="@+id/orig"
-            android:layout_width="match_parent"
-            android:layout_height="298dp"
-            android:background="@drawable/gradient"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/gradient"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/movie_details_gradient"
+            app:layout_constraintEnd_toEndOf="@+id/ivBackImage"
+            app:layout_constraintStart_toStartOf="@+id/ivBackImage"
+            app:layout_constraintTop_toTopOf="@+id/ivBackImage"
+            app:layout_constraintBottom_toBottomOf="@id/ivBackImage"            />
 
         <TextView
-            android:id="@+id/backTV"
+            android:id="@+id/tvBack"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="44dp"
             android:alpha="0.5"
             android:background="@color/backgroundTransparent"
@@ -41,239 +42,241 @@
             android:paddingStart="18dp"
             android:paddingEnd="18dp"
             android:text="@string/back"
-            android:textAppearance="@style/back"
-            app:drawableStartCompat="@drawable/ic_baseline_chevron_left_24"
-            app:drawableTint="@color/white"
+            android:textAppearance="@style/WhiteText.Style12sp.Bold"
+            app:drawableStartCompat="@drawable/ic_back"
+            app:drawableTint="@color/white236"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
-            android:id="@+id/ageLimitTV"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="16dp"
+            android:id="@+id/tvAgeLimit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/marginStartEnd_16dp"
             android:layout_marginTop="222dp"
             android:gravity="start"
-            android:text="@string/_13"
-            android:textAppearance="@style/style12sp"
+            android:text="@string/movieDetails_ageLimit_13plus"
+            android:textAppearance="@style/WhiteText.Style12sp.Bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/nameTV"
+            android:id="@+id/tvName"
             android:layout_width="match_parent"
-            android:layout_height="88dp"
-            android:layout_marginStart="@dimen/dimen16dp"
-            android:layout_marginEnd="@dimen/dimen16dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/marginStartEnd_16dp"
+            android:layout_marginEnd="@dimen/marginStartEnd_16dp"
             android:gravity="start|bottom"
             android:lineSpacingMultiplier="0.9"
-            android:text="@string/name"
-            android:textAppearance="@style/name"
+            android:text="@string/movieDetails_name"
+            android:textSize="40sp"
+            android:textColor="@color/white236"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ageLimitTV" />
+            app:layout_constraintTop_toBottomOf="@+id/tvAgeLimit" />
 
         <TextView
-            android:id="@+id/genre"
+            android:id="@+id/tvGenre"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_marginStart="@dimen/dimen16dp"
-            android:layout_marginEnd="@dimen/dimen16dp"
-            android:text="@string/tag"
-            android:textAppearance="@style/tag"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/marginStartEnd_16dp"
+            android:layout_marginEnd="@dimen/marginStartEnd_16dp"
+            android:text="@string/movieDetails_genre"
+            android:textSize="14sp"
+            android:textColor="@color/ratingBarActivated"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nameTV" />
+            app:layout_constraintTop_toBottomOf="@+id/tvName" />
 
         <RatingBar
             android:id="@+id/ratingBar"
-            style="@style/starsRatingBar"
+            style="@style/StarsRatingBar"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_marginStart="@dimen/dimen16dp"
-            android:layout_marginEnd="@dimen/dimen16dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/marginStartEnd_16dp"
             android:rating="2.5"
+            app:layout_constraintBottom_toBottomOf="@+id/tvReviews"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/genre" />
+            app:layout_constraintTop_toTopOf="@+id/tvReviews" />
 
         <TextView
-            android:id="@+id/reviews"
-            style="@style/reviews"
+            android:id="@+id/tvReviews"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_marginStart="@dimen/dimen16dp"
-            android:layout_marginEnd="@dimen/dimen16dp"
-            android:text="@string/reviews"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/marginStartEnd_16dp"
+            android:text="@string/movieDetails_reviews"
+            android:textColor="@color/ratingBarNormal"
             app:layout_constraintStart_toEndOf="@+id/ratingBar"
-            app:layout_constraintTop_toTopOf="@+id/ratingBar" />
+            app:layout_constraintTop_toBottomOf="@+id/tvGenre" />
 
         <TextView
-            android:id="@+id/storyline"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_marginStart="@dimen/dimen16dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="@dimen/dimen16dp"
-            android:text="@string/storyline"
-            android:textAppearance="@style/heading"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/reviews" />
-
-        <TextView
-            android:id="@+id/description"
+            android:id="@+id/tvStoryline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen16dp"
-            android:layout_marginEnd="@dimen/dimen16dp"
+            android:layout_marginStart="@dimen/marginStartEnd_16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="@dimen/marginStartEnd_16dp"
+            android:text="@string/movieDetails_storyline"
+            android:textAppearance="@style/WhiteText.Style14sp.Bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvReviews" />
+
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/marginStartEnd_16dp"
+            android:layout_marginEnd="@dimen/marginStartEnd_16dp"
             android:alpha="0.75"
             android:lineSpacingExtra="4sp"
             android:paddingTop="12sp"
-            android:text="@string/description"
-            android:textAppearance="@style/style14sp"
+            android:text="@string/movieDetails_description"
+            android:textAppearance="@style/WhiteText.Style14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/storyline" />
+            app:layout_constraintTop_toBottomOf="@+id/tvStoryline" />
 
         <TextView
-            android:id="@+id/cast"
+            android:id="@+id/tvCast"
             android:layout_width="match_parent"
-            android:layout_height="24dp"
-            android:layout_marginStart="@dimen/dimen16dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/marginStartEnd_16dp"
             android:layout_marginTop="24dp"
-            android:layout_marginEnd="@dimen/dimen16dp"
-            android:text="@string/heading"
-            android:textAppearance="@style/heading"
+            android:layout_marginEnd="@dimen/marginStartEnd_16dp"
+            android:text="@string/movieDetails_cast"
+            android:textAppearance="@style/WhiteText.Style14sp.Bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/description" />
+            app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/ivCast1"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_gravity="center"
-            android:layout_marginStart="@dimen/dimen16dp"
+            android:layout_marginStart="@dimen/marginStartEnd_16dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="@dimen/marginCast_8dp"
             android:adjustViewBounds="true"
-            android:contentDescription="@string/full_image"
+            android:contentDescription="@string/movieDetails_downey"
             android:scaleType="centerCrop"
-            android:src="@drawable/downey"
+            android:src="@drawable/movie_details_downey"
             app:layout_constraintBottom_toTopOf="@+id/barrier"
             app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toStartOf="@+id/imageView2"
+            app:layout_constraintEnd_toStartOf="@+id/ivCast2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cast"
+            app:layout_constraintTop_toBottomOf="@+id/tvCast"
             app:shapeAppearanceOverlay="@style/corners" />
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/tvCast1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:lines="2"
-            android:layout_marginStart="@dimen/dimen16dp"
+            android:maxLines="2"
+            android:layout_marginStart="@dimen/marginStartEnd_16dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="@string/downey"
-            android:textAppearance="@style/style12sp"
-            app:layout_constraintEnd_toStartOf="@+id/textView2"
+            android:layout_marginEnd="@dimen/marginCast_8dp"
+            android:text="@string/movieDetails_downey"
+            android:textAppearance="@style/WhiteText.Style12sp.Bold"
+            app:layout_constraintEnd_toStartOf="@+id/tvCast2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView1" />
+            app:layout_constraintTop_toBottomOf="@+id/ivCast1" />
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/ivCast2"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_gravity="center"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="@dimen/marginCast_8dp"
             android:adjustViewBounds="true"
-            android:contentDescription="@string/full_image"
+            android:contentDescription="@string/movieDetails_evans"
             android:scaleType="centerCrop"
-            android:src="@drawable/evans"
+            android:src="@drawable/movie_details_evans"
             app:layout_constraintBottom_toTopOf="@+id/barrier"
-            app:layout_constraintEnd_toStartOf="@+id/imageView3"
-            app:layout_constraintStart_toEndOf="@+id/imageView1"
-            app:layout_constraintTop_toTopOf="@+id/imageView1"
+            app:layout_constraintEnd_toStartOf="@+id/ivCast3"
+            app:layout_constraintStart_toEndOf="@+id/ivCast1"
+            app:layout_constraintTop_toTopOf="@+id/ivCast1"
             app:shapeAppearanceOverlay="@style/corners" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/tvCast2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:lines="2"
+            android:maxLines="2"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="@string/evans"
-            android:textAppearance="@style/style12sp"
-            app:layout_constraintEnd_toStartOf="@+id/textView3"
-            app:layout_constraintStart_toEndOf="@+id/textView1"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+            android:layout_marginEnd="@dimen/marginCast_8dp"
+            android:text="@string/movieDetails_evans"
+            android:textAppearance="@style/WhiteText.Style12sp.Bold"
+            app:layout_constraintEnd_toStartOf="@+id/tvCast3"
+            app:layout_constraintStart_toEndOf="@+id/tvCast1"
+            app:layout_constraintTop_toBottomOf="@+id/ivCast2" />
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/ivCast3"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_gravity="center"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="@dimen/marginCast_8dp"
             android:adjustViewBounds="true"
-            android:contentDescription="@string/full_image"
+            android:contentDescription="@string/movieDetails_ruffalo"
             android:scaleType="centerCrop"
-            android:src="@drawable/ruffalo"
+            android:src="@drawable/movie_details_ruffalo"
             app:layout_constraintBottom_toTopOf="@+id/barrier"
-            app:layout_constraintEnd_toStartOf="@+id/imageView4"
-            app:layout_constraintStart_toEndOf="@+id/imageView2"
-            app:layout_constraintTop_toTopOf="@+id/imageView1"
+            app:layout_constraintEnd_toStartOf="@+id/ivCast4"
+            app:layout_constraintStart_toEndOf="@+id/ivCast2"
+            app:layout_constraintTop_toTopOf="@+id/ivCast1"
             app:shapeAppearanceOverlay="@style/corners" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/tvCast3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:lines="2"
+            android:maxLines="2"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="@string/ruffalo"
-            android:textAppearance="@style/style12sp"
-            app:layout_constraintEnd_toStartOf="@+id/textView4"
-            app:layout_constraintStart_toEndOf="@+id/textView2"
-            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+            android:layout_marginEnd="@dimen/marginCast_8dp"
+            android:text="@string/movieDetails_ruffalo"
+            android:textAppearance="@style/WhiteText.Style12sp.Bold"
+            app:layout_constraintEnd_toStartOf="@+id/tvCast4"
+            app:layout_constraintStart_toEndOf="@+id/tvCast2"
+            app:layout_constraintTop_toBottomOf="@+id/ivCast3" />
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/ivCast4"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_gravity="center"
-            android:layout_marginEnd="@dimen/dimen16dp"
+            android:layout_marginEnd="@dimen/marginStartEnd_16dp"
             android:adjustViewBounds="true"
-            android:contentDescription="@string/full_image"
+            android:contentDescription="@string/movieDetails_hemsworth"
             android:scaleType="centerCrop"
-            android:src="@drawable/hemsworth"
+            android:src="@drawable/movie_details_hemsworth"
             app:layout_constraintBottom_toTopOf="@+id/barrier"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView3"
-            app:layout_constraintTop_toTopOf="@+id/imageView1"
+            app:layout_constraintStart_toEndOf="@+id/ivCast3"
+            app:layout_constraintTop_toTopOf="@+id/ivCast1"
             app:shapeAppearanceOverlay="@style/corners" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/tvCast4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:lines="2"
+            android:maxLines="2"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="@dimen/dimen16dp"
-            android:text="@string/hemsworth"
-            android:textAppearance="@style/style12sp"
+            android:layout_marginEnd="@dimen/marginStartEnd_16dp"
+            android:text="@string/movieDetails_hemsworth"
+            android:textAppearance="@style/WhiteText.Style12sp.Bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView3"
-            app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+            app:layout_constraintStart_toEndOf="@+id/tvCast3"
+            app:layout_constraintTop_toBottomOf="@+id/ivCast4" />
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/barrier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="imageView1, imageView2, imageView3" />
+            app:constraint_referenced_ids="ivCast1, ivCast2, ivCast3" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
