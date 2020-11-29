@@ -14,22 +14,13 @@
             android:id="@+id/ivBackImage"
             android:layout_width="0dp"
             android:layout_height="298dp"
-            android:contentDescription="@string/movie_details_name"
+            android:contentDescription="@string/movie_name"
             android:scaleType="centerCrop"
             android:src="@drawable/movie_details_back_image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <View
-            android:id="@+id/gradient"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@drawable/movie_details_gradient"
-            app:layout_constraintBottom_toBottomOf="@id/ivBackImage"
-            app:layout_constraintEnd_toEndOf="@+id/ivBackImage"
-            app:layout_constraintStart_toStartOf="@+id/ivBackImage"
-            app:layout_constraintTop_toTopOf="@+id/ivBackImage" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:foreground="@drawable/movie_details_gradient"/>
 
         <TextView
             android:id="@+id/tvBack"
@@ -68,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="222dp"
             android:gravity="start"
-            android:text="@string/movie_details_age_limit_13plus"
+            android:text="@string/age_limit_13plus"
             android:textAppearance="@style/WhiteText.Style12sp.Bold"
             app:layout_constraintStart_toEndOf="@+id/guidelineLeft"
             app:layout_constraintTop_toTopOf="parent" />
@@ -79,7 +70,7 @@
             android:layout_height="wrap_content"
             android:gravity="start|bottom"
             android:lineSpacingMultiplier="0.9"
-            android:text="@string/movie_details_name"
+            android:text="@string/movie_name"
             android:textColor="@color/white_236"
             android:textSize="40sp"
             android:textStyle="bold"
@@ -91,8 +82,8 @@
             android:id="@+id/tvGenre"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/movie_details_genre"
-            android:textColor="@color/rating_bar_activated"
+            android:text="@string/movie_genre"
+            android:textColor="@color/genre"
             android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
             app:layout_constraintStart_toEndOf="@+id/guidelineLeft"
@@ -113,13 +104,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_start_end_16dp"
-            android:text="@string/movie_details_reviews"
+            android:text="@string/movie_reviews"
             android:textColor="@color/rating_bar_normal"
             app:layout_constraintStart_toEndOf="@+id/ratingBar"
             app:layout_constraintTop_toBottomOf="@+id/tvGenre" />
 
         <TextView
-            android:id="@+id/tvStoryline"
+            android:id="@+id/tvMinutes"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -140,7 +131,7 @@
             android:textAppearance="@style/WhiteText.Style14sp"
             app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
             app:layout_constraintStart_toEndOf="@+id/guidelineLeft"
-            app:layout_constraintTop_toBottomOf="@+id/tvStoryline" />
+            app:layout_constraintTop_toBottomOf="@+id/tvMinutes" />
 
         <TextView
             android:id="@+id/tvCast"
@@ -169,7 +160,7 @@
             app:layout_constraintEnd_toStartOf="@+id/ivCast2"
             app:layout_constraintStart_toEndOf="@+id/guidelineLeft"
             app:layout_constraintTop_toBottomOf="@+id/tvCast"
-            app:shapeAppearanceOverlay="@style/corners" />
+            app:shapeAppearanceOverlay="@style/iv_cast_corners" />
 
         <TextView
             android:id="@+id/tvCast1"
@@ -197,7 +188,7 @@
             app:layout_constraintEnd_toStartOf="@+id/ivCast3"
             app:layout_constraintStart_toEndOf="@+id/ivCast1"
             app:layout_constraintTop_toTopOf="@+id/ivCast1"
-            app:shapeAppearanceOverlay="@style/corners" />
+            app:shapeAppearanceOverlay="@style/iv_cast_corners" />
 
         <TextView
             android:id="@+id/tvCast2"
@@ -225,7 +216,7 @@
             app:layout_constraintEnd_toStartOf="@+id/ivCast4"
             app:layout_constraintStart_toEndOf="@+id/ivCast2"
             app:layout_constraintTop_toTopOf="@+id/ivCast1"
-            app:shapeAppearanceOverlay="@style/corners" />
+            app:shapeAppearanceOverlay="@style/iv_cast_corners" />
 
         <TextView
             android:id="@+id/tvCast3"
@@ -252,7 +243,7 @@
             app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
             app:layout_constraintStart_toEndOf="@+id/ivCast3"
             app:layout_constraintTop_toTopOf="@+id/ivCast1"
-            app:shapeAppearanceOverlay="@style/corners" />
+            app:shapeAppearanceOverlay="@style/iv_cast_corners" />
 
         <TextView
             android:id="@+id/tvCast4"

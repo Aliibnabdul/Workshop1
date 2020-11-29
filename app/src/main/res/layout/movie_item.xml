@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/movie_item_frame"
+    android:padding="2dp"
+    >
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivBackImage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@string/movie_name"
+        android:scaleType="centerCrop"
+        android:src="@drawable/avengers_img"
+        android:adjustViewBounds="true"
+        app:layout_constraintBottom_toTopOf="@+id/tvName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:foreground="@drawable/movie_item_gradient"
+        app:shapeAppearanceOverlay="@style/iv_back_image_corners"
+        />
+
+    <TextView
+        android:id="@+id/tvAgeLimit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintDimensionRatio="1:1"
+        android:background="@drawable/age_limit_background"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:text="@string/age_limit_13plus"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/age_limit_corners" />
+
+    <ImageView
+        android:layout_width="16dp"
+        android:layout_height="12dp"
+        android:layout_marginTop="14dp"
+        android:alpha="0.75"
+        android:src="@drawable/ic_heart_checked"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        android:contentDescription="@string/movies_list_like" />
+
+    <TextView
+        android:id="@+id/tvGenre"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/movie_genre"
+        android:textColor="@color/genre"
+        android:textSize="8sp"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintStart_toEndOf="@+id/guidelineLeft"
+        app:layout_constraintBottom_toTopOf="@+id/ratingBar"
+        tools:ignore="SmallSp" />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        style="@style/StarsRatingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:rating="2.5"
+        android:scaleX="0.7"
+        android:scaleY="0.7"
+        app:layout_constraintBottom_toBottomOf="@+id/tvReviews"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvReviews" />
+
+    <TextView
+        android:id="@+id/tvReviews"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/movie_reviews"
+        android:textColor="@color/movie_item_reviews"
+        android:textSize="8sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/ivBackImage"
+        app:layout_constraintStart_toEndOf="@+id/ratingBar"
+        tools:ignore="SmallSp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/margin_start_end_8dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/margin_start_end_8dp" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="start|bottom"
+        android:text="@string/movie_name"
+        android:textColor="@color/white_236"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tvMinutes"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintStart_toEndOf="@+id/guidelineLeft" />
+
+    <TextView
+        android:id="@+id/tvMinutes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/movies_list_minutes"
+        android:textColor="@color/movie_item_minutes"
+        android:textSize="8sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintStart_toEndOf="@+id/guidelineLeft"
+        tools:ignore="SmallSp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
