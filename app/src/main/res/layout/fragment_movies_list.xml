@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:background="@color/black_blue">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="44dp"
-            android:gravity="start|center_vertical"
+            android:gravity="center"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
             android:text="@string/movies_list_title"
@@ -23,7 +23,7 @@
             android:textSize="14sp"
             android:textStyle="bold"
             app:drawableStartCompat="@drawable/ic_my_location"
-            app:drawableTint="@color/location_icon"
+            app:drawableTint="@color/scarlet"
             android:drawablePadding="@dimen/margin_cast_8dp"
             app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
             app:layout_constraintTop_toTopOf="parent" />
@@ -53,7 +53,7 @@
             android:id="@+id/avengers_layout"
             layout="@layout/movie_item"
             android:layout_width="0dp"
-            android:layout_height="297dp"
+            android:layout_height="296dp"
             android:layout_marginTop="27dp"
             android:layout_marginEnd="4dp"
             app:layout_constraintEnd_toStartOf="@+id/guidelineCenter"

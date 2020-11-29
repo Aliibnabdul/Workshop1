@@ -4,7 +4,7 @@
     <string name="back">Back</string>
     <string name="movie_name">Avengers: \nEnd Game</string>
     <string name="movie_genre">Action, Adventure, Fantasy</string>
-    <string name="movie_reviews">125 REVIEWS</string>
+    <string name="movie_reviews">125 reviews</string>
     <string name="movie_details_storyline">Storyline</string>
     <string name="movie_details_description">
         After the devastating events of Avengers: Infinity War, the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos\' actions and restore balance to the universe.
@@ -16,6 +16,6 @@
     <string name="movie_details_hemsworth">Chris Hemsworth</string>
 
     <string name="movies_list_title">Movies list</string>
-    <string name="movies_list_minutes">137 MIN</string>
+    <string name="movies_list_minutes">137 min</string>
     <string name="movies_list_like">Like</string>
 </resources>

@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:background="@color/black_blue">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -56,13 +56,17 @@
         <TextView
             android:id="@+id/tvAgeLimit"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="1:1"
             android:layout_marginTop="222dp"
-            android:gravity="start"
+            android:background="@drawable/age_limit_background"
+            android:gravity="center"
             android:text="@string/age_limit_13plus"
-            android:textAppearance="@style/WhiteText.Style12sp.Bold"
+            android:textAppearance="@style/tv_age_limit"
+            app:layout_constraintBottom_toBottomOf="@+id/ivBackImage"
             app:layout_constraintStart_toEndOf="@+id/guidelineLeft"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/tvName"
@@ -83,7 +87,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/movie_genre"
-            android:textColor="@color/genre"
+            android:textColor="@color/scarlet"
             android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
             app:layout_constraintStart_toEndOf="@+id/guidelineLeft"
@@ -105,7 +109,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_start_end_16dp"
             android:text="@string/movie_reviews"
-            android:textColor="@color/rating_bar_normal"
+            android:textAllCaps="true"
+            android:textColor="@color/blue_gray"
             app:layout_constraintStart_toEndOf="@+id/ratingBar"
             app:layout_constraintTop_toBottomOf="@+id/tvGenre" />
 

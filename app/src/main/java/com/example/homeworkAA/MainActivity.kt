@@ -5,29 +5,28 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.homeworkAA.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), FragmentMoviesList.ClickListener {
-    private lateinit var binding : ActivityMainBinding
-    private val moviesListFragment = FragmentMoviesList()
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (savedInstanceState == null){
+        if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .apply {
-                    add(R.id.fragments_container, moviesListFragment)
-                    commit()
-                }
+                    .apply {
+                        add(R.id.fragments_container, FragmentMoviesList.newInstance())
+                        commit()
+                    }
         }
     }
 
-    override fun replaceFragment() {
+    override fun moveToFragment() {
         supportFragmentManager.beginTransaction()
-            .apply {
-                replace(R.id.fragments_container, FragmentMoviesDetails())
-                addToBackStack(null)
-                commit()
-            }
+                .apply {
+                    replace(R.id.fragments_container, FragmentMoviesDetails.newInstance())
+                    addToBackStack(null)
+                    commit()
+                }
     }
 }

@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/movie_item_frame"
-    android:padding="2dp"
     >
 
     <com.google.android.material.imageview.ShapeableImageView
@@ -28,17 +27,19 @@
     <TextView
         android:id="@+id/tvAgeLimit"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintDimensionRatio="1:1"
-        android:background="@drawable/age_limit_background"
+        android:layout_height="0dp"
         android:layout_marginTop="12dp"
+        android:background="@drawable/age_limit_background"
         android:gravity="center"
         android:text="@string/age_limit_13plus"
-        android:textColor="@color/white"
-        android:textSize="12sp"
+        android:textAppearance="@style/tv_age_limit"
+        app:layout_constraintBottom_toTopOf="@+id/tvName"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/guidelineLeft"
         app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/age_limit_corners" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:layout_width="16dp"
@@ -55,7 +56,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/movie_genre"
-        android:textColor="@color/genre"
+        android:textColor="@color/scarlet"
         android:textSize="8sp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toEndOf="@+id/guidelineLeft"
@@ -79,7 +80,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/movie_reviews"
-        android:textColor="@color/movie_item_reviews"
+        android:textAllCaps="true"
+        android:textColor="@color/blue_gray"
         android:textSize="8sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/ivBackImage"
@@ -119,7 +121,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="@string/movies_list_minutes"
-        android:textColor="@color/movie_item_minutes"
+        android:textAllCaps="true"
+        android:textColor="@color/blue_dark_gray"
         android:textSize="8sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
