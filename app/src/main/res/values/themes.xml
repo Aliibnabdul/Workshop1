@@ -29,8 +29,8 @@
     </style>
 
     <style name="StarsRatingBar" parent="Base.Widget.AppCompat.RatingBar.Small">
-        <item name="android:progressTint">@color/scarlet</item>
-        <item name="android:secondaryProgressTint">@color/scarlet</item>
+        <item name="android:progressTint">@color/pink</item>
+        <item name="android:secondaryProgressTint">@color/pink</item>
         <item name="android:progressBackgroundTint">@color/blue_gray</item>
     </style>
 

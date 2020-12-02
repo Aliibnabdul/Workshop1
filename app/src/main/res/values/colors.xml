@@ -12,8 +12,9 @@
     <color name="background_transparent">#00000000</color>
     <color name="black_blue">#191926</color>
     <color name="blue_gray">#6D6D80</color>
-    <color name="scarlet">#FF3466</color>
+    <color name="pink">#FF3466</color>
     <color name="dark_blue">#222232</color>
     <color name="gray">#496F6F6F</color>
     <color name="blue_dark_gray">#565665</color>
+    <color name="grey">#6D6D80</color>
 </resources>

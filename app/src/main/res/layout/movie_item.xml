@@ -42,43 +42,48 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
-        android:layout_width="16dp"
-        android:layout_height="12dp"
-        android:layout_marginTop="14dp"
+        android:layout_width="18dp"
+        android:layout_height="14dp"
         android:alpha="0.75"
+        android:contentDescription="@string/movies_list_like"
         android:src="@drawable/ic_heart_checked"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/tvAgeLimit"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        android:contentDescription="@string/movies_list_like" />
+        app:layout_constraintTop_toTopOf="@+id/tvAgeLimit" />
 
     <TextView
         android:id="@+id/tvGenre"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
         android:text="@string/movie_genre"
-        android:textColor="@color/scarlet"
+        android:textColor="@color/pink"
         android:textSize="8sp"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toEndOf="@+id/guidelineLeft"
-        app:layout_constraintBottom_toTopOf="@+id/ratingBar"
+        app:layout_constraintBottom_toTopOf="@+id/tvReviews"
         tools:ignore="SmallSp" />
 
-    <RatingBar
+    <com.example.homeworkAA.customRatigBar.RatingBarSvg
         android:id="@+id/ratingBar"
-        style="@style/StarsRatingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:rating="2.5"
-        android:scaleX="0.7"
-        android:scaleY="0.7"
+        android:numStars="5"
+        android:progressBackgroundTint="@color/grey"
+        android:progressDrawable="@drawable/ratingbar_svg_selector"
+        android:progressTint="@color/pink"
+        android:rating="4"
+        android:secondaryProgressTint="@color/grey"
         app:layout_constraintBottom_toBottomOf="@+id/tvReviews"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/guidelineLeft"
         app:layout_constraintTop_toTopOf="@+id/tvReviews" />
 
     <TextView
         android:id="@+id/tvReviews"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/movie_reviews"
         android:textAllCaps="true"
         android:textColor="@color/blue_gray"
