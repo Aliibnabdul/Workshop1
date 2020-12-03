@@ -93,12 +93,17 @@
             app:layout_constraintStart_toEndOf="@+id/guidelineLeft"
             app:layout_constraintTop_toBottomOf="@+id/tvName" />
 
-        <RatingBar
+        <com.example.homeworkAA.customRatigBar.RatingBarSvg
             android:id="@+id/ratingBar"
-            style="@style/StarsRatingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:numStars="5"
+            android:progressBackgroundTint="@color/blue_gray"
+            android:progressDrawable="@drawable/ratingbar_svg_selector_14dp"
+            android:progressTint="@color/pink"
             android:rating="4"
+            android:isIndicator="true"
+            android:secondaryProgressTint="@color/blue_gray"
             app:layout_constraintBottom_toBottomOf="@+id/tvReviews"
             app:layout_constraintStart_toEndOf="@+id/guidelineLeft"
             app:layout_constraintTop_toTopOf="@+id/tvReviews" />

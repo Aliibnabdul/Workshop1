@@ -43,7 +43,7 @@
 
     <ImageView
         android:layout_width="18dp"
-        android:layout_height="14dp"
+        android:layout_height="0dp"
         android:alpha="0.75"
         android:contentDescription="@string/movies_list_like"
         android:src="@drawable/ic_heart_checked"
@@ -69,11 +69,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:numStars="5"
-        android:progressBackgroundTint="@color/grey"
-        android:progressDrawable="@drawable/ratingbar_svg_selector"
+        android:progressBackgroundTint="@color/blue_gray"
+        android:progressDrawable="@drawable/ratingbar_svg_selector_8dp"
         android:progressTint="@color/pink"
         android:rating="4"
-        android:secondaryProgressTint="@color/grey"
+        android:isIndicator="true"
+        android:secondaryProgressTint="@color/blue_gray"
         app:layout_constraintBottom_toBottomOf="@+id/tvReviews"
         app:layout_constraintStart_toEndOf="@+id/guidelineLeft"
         app:layout_constraintTop_toTopOf="@+id/tvReviews" />
