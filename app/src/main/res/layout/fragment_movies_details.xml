@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black_blue">
@@ -13,14 +13,16 @@
         <ImageView
             android:id="@+id/ivBackImage"
             android:layout_width="0dp"
-            android:layout_height="298dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
             android:contentDescription="@string/movie_name"
+            android:foreground="@drawable/movie_details_gradient"
+            android:minHeight="200dp"
             android:scaleType="centerCrop"
             android:src="@drawable/movie_details_back_image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:foreground="@drawable/movie_details_gradient"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvBack"
@@ -57,16 +59,14 @@
             android:id="@+id/tvAgeLimit"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="1:1"
-            android:layout_marginTop="222dp"
+            android:layout_marginBottom="56dp"
             android:background="@drawable/age_limit_background"
             android:gravity="center"
             android:text="@string/age_limit_13plus"
             android:textAppearance="@style/tv_age_limit"
             app:layout_constraintBottom_toBottomOf="@+id/ivBackImage"
-            app:layout_constraintStart_toEndOf="@+id/guidelineLeft"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toEndOf="@+id/guidelineLeft" />
 
         <TextView
             android:id="@+id/tvName"
@@ -97,12 +97,12 @@
             android:id="@+id/ratingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:isIndicator="true"
             android:numStars="5"
             android:progressBackgroundTint="@color/blue_gray"
             android:progressDrawable="@drawable/ratingbar_svg_selector_14dp"
             android:progressTint="@color/pink"
             android:rating="4"
-            android:isIndicator="true"
             android:secondaryProgressTint="@color/blue_gray"
             app:layout_constraintBottom_toBottomOf="@+id/tvReviews"
             app:layout_constraintStart_toEndOf="@+id/guidelineLeft"
@@ -120,7 +120,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tvGenre" />
 
         <TextView
-            android:id="@+id/tvMinutes"
+            android:id="@+id/tvStoryline"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -136,12 +136,12 @@
             android:layout_height="wrap_content"
             android:alpha="0.75"
             android:lineSpacingExtra="4sp"
-            android:paddingTop="12sp"
+            android:paddingTop="12dp"
             android:text="@string/movie_details_description"
             android:textAppearance="@style/WhiteText.Style14sp"
             app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
             app:layout_constraintStart_toEndOf="@+id/guidelineLeft"
-            app:layout_constraintTop_toBottomOf="@+id/tvMinutes" />
+            app:layout_constraintTop_toBottomOf="@+id/tvStoryline" />
 
         <TextView
             android:id="@+id/tvCast"
@@ -154,124 +154,17 @@
             app:layout_constraintStart_toEndOf="@+id/guidelineLeft"
             app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/ivCast1"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCast"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="@dimen/margin_cast_8dp"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/movie_details_downey"
-            android:scaleType="centerCrop"
-            android:src="@drawable/movie_details_downey"
-            app:layout_constraintBottom_toTopOf="@+id/barrier"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintEnd_toStartOf="@+id/ivCast2"
-            app:layout_constraintStart_toEndOf="@+id/guidelineLeft"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvCast"
-            app:shapeAppearanceOverlay="@style/iv_cast_corners" />
-
-        <TextView
-            android:id="@+id/tvCast1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="@dimen/margin_cast_8dp"
-            android:text="@string/movie_details_downey"
-            android:textAppearance="@style/WhiteText.Style12sp.Bold"
-            app:layout_constraintEnd_toStartOf="@+id/tvCast2"
-            app:layout_constraintStart_toEndOf="@+id/guidelineLeft"
-            app:layout_constraintTop_toBottomOf="@+id/ivCast1" />
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/ivCast2"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_gravity="center"
-            android:layout_marginEnd="@dimen/margin_cast_8dp"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/movie_details_evans"
-            android:scaleType="centerCrop"
-            android:src="@drawable/movie_details_evans"
-            app:layout_constraintBottom_toTopOf="@+id/barrier"
-            app:layout_constraintEnd_toStartOf="@+id/ivCast3"
-            app:layout_constraintStart_toEndOf="@+id/ivCast1"
-            app:layout_constraintTop_toTopOf="@+id/ivCast1"
-            app:shapeAppearanceOverlay="@style/iv_cast_corners" />
-
-        <TextView
-            android:id="@+id/tvCast2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="@dimen/margin_cast_8dp"
-            android:text="@string/movie_details_evans"
-            android:textAppearance="@style/WhiteText.Style12sp.Bold"
-            app:layout_constraintEnd_toStartOf="@+id/tvCast3"
-            app:layout_constraintStart_toEndOf="@+id/tvCast1"
-            app:layout_constraintTop_toBottomOf="@+id/ivCast2" />
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/ivCast3"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_gravity="center"
-            android:layout_marginEnd="@dimen/margin_cast_8dp"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/movie_details_ruffalo"
-            android:scaleType="centerCrop"
-            android:src="@drawable/movie_details_ruffalo"
-            app:layout_constraintBottom_toTopOf="@+id/barrier"
-            app:layout_constraintEnd_toStartOf="@+id/ivCast4"
-            app:layout_constraintStart_toEndOf="@+id/ivCast2"
-            app:layout_constraintTop_toTopOf="@+id/ivCast1"
-            app:shapeAppearanceOverlay="@style/iv_cast_corners" />
-
-        <TextView
-            android:id="@+id/tvCast3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="@dimen/margin_cast_8dp"
-            android:text="@string/movie_details_ruffalo"
-            android:textAppearance="@style/WhiteText.Style12sp.Bold"
-            app:layout_constraintEnd_toStartOf="@+id/tvCast4"
-            app:layout_constraintStart_toEndOf="@+id/tvCast2"
-            app:layout_constraintTop_toBottomOf="@+id/ivCast3" />
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/ivCast4"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_gravity="center"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/movie_details_hemsworth"
-            android:scaleType="centerCrop"
-            android:src="@drawable/movie_details_hemsworth"
-            app:layout_constraintBottom_toTopOf="@+id/barrier"
-            app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-            app:layout_constraintStart_toEndOf="@+id/ivCast3"
-            app:layout_constraintTop_toTopOf="@+id/ivCast1"
-            app:shapeAppearanceOverlay="@style/iv_cast_corners" />
-
-        <TextView
-            android:id="@+id/tvCast4"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/movie_details_hemsworth"
-            android:textAppearance="@style/WhiteText.Style12sp.Bold"
-            app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-            app:layout_constraintStart_toEndOf="@+id/tvCast3"
-            app:layout_constraintTop_toBottomOf="@+id/ivCast4" />
-
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/barrier"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="bottom"
-            app:constraint_referenced_ids="ivCast1, ivCast2, ivCast3" />
+            tools:listitem="@layout/cast_recycler_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
