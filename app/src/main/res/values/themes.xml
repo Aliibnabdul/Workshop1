@@ -12,7 +12,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-        <item name="android:navigationBarColor">@color/background</item>
+        <item name="android:navigationBarColor">@color/black_blue</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
@@ -28,13 +28,6 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="StarsRatingBar" parent="Base.Widget.AppCompat.RatingBar.Small">
-        <item name="android:progressTint">@color/rating_bar_activated</item>
-        <item name="android:secondaryProgressTint">@color/rating_bar_activated</item>
-        <item name="android:progressBackgroundTint">@color/rating_bar_normal</item>
-        <item name="android:isIndicator">false</item>
-    </style>
-
     <style name="WhiteText.Style14sp">
         <item name="android:textSize">14sp</item>
     </style>
@@ -43,8 +36,18 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="corners">
+    <style name="iv_cast_corners">
         <item name="cornerSize">5%</item>
+    </style>
+
+    <style name="iv_back_image_corners">
+        <item name="cornerSize">@dimen/corners_movie_item</item>
+    </style>
+
+    <style name="tv_age_limit">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 </resources>

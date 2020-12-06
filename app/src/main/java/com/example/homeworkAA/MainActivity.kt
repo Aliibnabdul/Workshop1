@@ -1,27 +1,32 @@
 package com.example.homeworkAA
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.example.homeworkAA.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityMainBinding
+class MainActivity : AppCompatActivity(), FragmentMoviesList.ClickListener {
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        moveOnMovieDetailsActivity()
-        binding.apply {
-            tvMainActivity.setOnClickListener {
-                moveOnMovieDetailsActivity()
-            }
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                    .apply {
+                        add(R.id.fragments_container, FragmentMoviesList.newInstance())
+                        commit()
+                    }
         }
     }
 
-    private fun moveOnMovieDetailsActivity() {
-        startActivity(Intent(this, MovieDetailsActivity::class.java))
+    override fun moveToFragment() {
+        supportFragmentManager.beginTransaction()
+                .apply {
+                    replace(R.id.fragments_container, FragmentMoviesDetails.newInstance())
+                    addToBackStack(null)
+                    commit()
+                }
     }
 }
