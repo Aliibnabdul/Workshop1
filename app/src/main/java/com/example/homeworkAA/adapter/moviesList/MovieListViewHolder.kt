@@ -1,6 +1,11 @@
 package com.example.homeworkAA.adapter.moviesList
 
+import android.content.res.ColorStateList
 import android.content.res.Resources
+import android.widget.ImageView
+import androidx.annotation.ColorRes
+import androidx.core.content.ContextCompat
+import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.homeworkAA.R
@@ -25,10 +30,8 @@ class MovieListViewHolder(private val binding: ViewHolderMovieBinding) :
     }
 
     private fun setLikedState(liked: Boolean) {
-        if (liked) {
-            binding.ivLikeState.setImageResource(R.drawable.ic_heart_checked)
-        } else {
-            binding.ivLikeState.setImageResource(R.drawable.ic_heart_unchecked)
-        }
+        val heartColor = if (liked)R.color.pink
+        else R.color.white
+        binding.ivLikeState.setColorFilter(resources.getColor(heartColor, null))
     }
 }

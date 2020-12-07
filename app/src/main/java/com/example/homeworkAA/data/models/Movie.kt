@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Movie(
     val backImage: String,
-    val detailsBAckImage: String,
+    val detailsBackImage: String,
     val ageLimit: Int,
     val likeState: Boolean,
     val genre: List<String>,

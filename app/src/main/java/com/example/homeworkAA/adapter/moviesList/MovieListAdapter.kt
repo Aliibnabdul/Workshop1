@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.homeworkAA.data.models.Movie
 import com.example.homeworkAA.databinding.ViewHolderMovieBinding
 
-class MovieListAdapter(private val adapterClickListener: AdapterClickListenerInterface) :
+class MovieListAdapter(private val listener: (Movie) -> Unit) :
     RecyclerView.Adapter<MovieListViewHolder>() {
     var moviesList: List<Movie> = listOf()
         set(value) {
@@ -25,13 +25,11 @@ class MovieListAdapter(private val adapterClickListener: AdapterClickListenerInt
     override fun getItemCount(): Int = moviesList.size
 
     override fun onBindViewHolder(holder: MovieListViewHolder, position: Int) {
-        holder.onBind(moviesList[position])
-        holder.itemView.setOnClickListener {
-            adapterClickListener.onClick(moviesList[position])
+        holder.apply {
+            onBind(moviesList[position])
+            itemView.setOnClickListener {
+                listener(moviesList[position])
+            }
         }
     }
-}
-
-interface AdapterClickListenerInterface {
-    fun onClick(movie: Movie)
 }

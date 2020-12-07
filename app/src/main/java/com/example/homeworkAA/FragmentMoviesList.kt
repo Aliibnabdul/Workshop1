@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.homeworkAA.adapter.moviesList.AdapterClickListenerInterface
 import com.example.homeworkAA.adapter.moviesList.MovieListAdapter
 import com.example.homeworkAA.data.models.Movie
 import com.example.homeworkAA.databinding.FragmentMoviesListBinding
@@ -16,15 +15,8 @@ import com.example.homeworkAA.domain.MoviesDataSource
 
 class FragmentMoviesList : Fragment() {
     private lateinit var binding: FragmentMoviesListBinding
-    private var listener: ClickListener? = null
-    private var recycler: RecyclerView? = null
+    private lateinit var listener: ClickListener
     private lateinit var movieListAdapter: MovieListAdapter
-
-    private val clickListener = object : AdapterClickListenerInterface {
-        override fun onClick(movie: Movie) {
-            listener?.moveToFragment(movie)
-        }
-    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -45,21 +37,16 @@ class FragmentMoviesList : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        movieListAdapter = MovieListAdapter(clickListener)
-        recycler = binding.rvMovies
-        recycler?.layoutManager = GridLayoutManager(requireContext(), 2)
-        recycler?.adapter = movieListAdapter
+        movieListAdapter = MovieListAdapter(listener::moveToFragment)
+        binding.rvMovies.apply {
+            layoutManager = GridLayoutManager(requireContext(), 2)
+            adapter = movieListAdapter
+        }
     }
 
     override fun onStart() {
         super.onStart()
         movieListAdapter.moviesList = MoviesDataSource().getMovies()
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-        recycler = null
     }
 
     interface ClickListener {
