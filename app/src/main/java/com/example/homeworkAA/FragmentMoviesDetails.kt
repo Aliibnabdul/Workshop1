@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import coil.load
 import com.example.homeworkAA.adapter.castList.CastListAdapter
 import com.example.homeworkAA.data.models.Movie
 import com.example.homeworkAA.databinding.FragmentMoviesDetailsBinding
+import com.example.homeworkAA.extensions.movieBundle
 
 class FragmentMoviesDetails : Fragment() {
     private lateinit var binding: FragmentMoviesDetailsBinding
@@ -24,7 +24,7 @@ class FragmentMoviesDetails : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val movie: Movie? = arguments?.getParcelable(KEY_MOVIE_OBJECT)
+        val movie: Movie? = arguments?.movieBundle
         movie?.let { initView(it) }
     }
 
@@ -45,13 +45,11 @@ class FragmentMoviesDetails : Fragment() {
     }
 
     companion object {
-        private const val KEY_MOVIE_OBJECT = "KEY_MOVIE_OBJECT"
-
         fun newInstance(movie: Movie): FragmentMoviesDetails {
             return FragmentMoviesDetails().apply {
-                arguments = bundleOf(
-                    KEY_MOVIE_OBJECT to movie
-                )
+                arguments = Bundle().also {
+                    it.movieBundle = movie
+                }
             }
         }
     }
