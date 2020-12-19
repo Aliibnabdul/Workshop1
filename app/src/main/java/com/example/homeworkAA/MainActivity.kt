@@ -2,6 +2,7 @@ package com.example.homeworkAA
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.homeworkAA.data.models.Movie
 import com.example.homeworkAA.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), FragmentMoviesList.ClickListener {
@@ -21,10 +22,10 @@ class MainActivity : AppCompatActivity(), FragmentMoviesList.ClickListener {
         }
     }
 
-    override fun moveToFragment() {
+    override fun moveToFragment(movie: Movie) {
         supportFragmentManager.beginTransaction()
                 .apply {
-                    replace(R.id.fragments_container, FragmentMoviesDetails.newInstance())
+                    replace(R.id.fragments_container, FragmentMoviesDetails.newInstance(movie))
                     addToBackStack(null)
                     commit()
                 }
