@@ -1,7 +1,7 @@
 package com.example.homeworkAA.adapter.castList
 
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
+import com.bumptech.glide.Glide
 import com.example.homeworkAA.data.models.Actor
 import com.example.homeworkAA.databinding.CastRecyclerItemBinding
 
@@ -10,8 +10,10 @@ class CastListViewHolder(private val binding: CastRecyclerItemBinding) :
 
     fun onBind(actor: Actor) {
         binding.apply {
-            ivCast.load(actor.imageUrl)
             tvCast.text = actor.name
         }
+        Glide.with(binding.root.context)
+            .load(actor.picture)
+            .into(binding.ivCast)
     }
 }
