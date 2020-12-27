@@ -12,8 +12,8 @@ class CastListViewHolder(private val binding: CastRecyclerItemBinding) :
         binding.apply {
             tvCast.text = actor.name
         }
-        Glide.with(binding.root.context)
-            .load(actor.picture)
+        Glide.with(itemView.context)
+            .load(actor.imageUrl)
             .into(binding.ivCast)
     }
 }

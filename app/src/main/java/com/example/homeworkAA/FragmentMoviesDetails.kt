@@ -38,14 +38,15 @@ class FragmentMoviesDetails : Fragment() {
                 .into(binding.ivBackImage)
             tvAgeLimit.text = resources.getString(R.string.age_limit_13plus, movie.minimumAge)
             tvGenre.text = movie.genres.joinToString(separator = ", ") { it.name }
-            ratingBar.rating = movie.ratings / 2F
+            ratingBar.rating = movie.ratings
             tvReviews.text = resources.getString(R.string.movie_reviews, movie.numberOfRatings)
             tvName.text = movie.title
             tvDescription.text = movie.overview
-            if (movie.actors.isEmpty()) tvCast.visibility = View.GONE
-            else {
-                tvCast.visibility = View.VISIBLE
+            tvCast.visibility = if (movie.actors.isEmpty()) {
+                View.GONE
+            } else {
                 rvCast.adapter = CastListAdapter(movie.actors)
+                View.VISIBLE
             }
         }
     }

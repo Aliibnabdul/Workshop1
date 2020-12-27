@@ -67,7 +67,7 @@ private suspend fun loadActors(context: Context): List<Actor> = withContext(Disp
 
 internal fun parseActors(data: String): List<Actor> {
     val jsonActors = jsonFormat.decodeFromString<List<JsonActor>>(data)
-    return jsonActors.map { Actor(id = it.id, name = it.name, picture = it.profilePicture) }
+    return jsonActors.map { Actor(id = it.id, name = it.name, imageUrl = it.profilePicture) }
 }
 
 @Suppress("unused")
@@ -97,7 +97,7 @@ internal fun parseMovies(
             overview = jsonMovie.overview,
             poster = jsonMovie.posterPicture,
             backdrop = jsonMovie.backdropPicture,
-            ratings = jsonMovie.ratings,
+            ratings = jsonMovie.ratings / 2F,
             numberOfRatings = jsonMovie.votesCount,
             minimumAge = if (jsonMovie.adult) 16 else 13,
             runtime = jsonMovie.runtime,

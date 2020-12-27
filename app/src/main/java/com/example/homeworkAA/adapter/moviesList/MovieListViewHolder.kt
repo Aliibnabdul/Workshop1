@@ -12,14 +12,14 @@ class MovieListViewHolder(private val binding: ViewHolderMovieBinding) :
     private val resources: Resources = binding.root.resources
 
     fun onBind(movie: Movie) {
-        Glide.with(binding.root.context)
+        Glide.with(itemView.context)
             .load(movie.poster)
             .into(binding.ivBackImage)
 
         binding.apply {
             tvAgeLimit.text = resources.getString(R.string.age_limit_13plus, movie.minimumAge)
             tvGenre.text = movie.genres.joinToString(separator = ", ") { it.name }
-            ratingBar.rating = movie.ratings / 2F
+            ratingBar.rating = movie.ratings
             tvReviews.text = resources.getString(R.string.movie_reviews, movie.numberOfRatings)
             tvName.text = movie.title
             tvDuration.text = resources.getString(R.string.movies_list_minutes, movie.runtime)
