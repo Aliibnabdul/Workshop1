@@ -6,10 +6,10 @@ import java.lang.IllegalArgumentException
 
 private const val KEY_MOVIE_OBJECT = "KEY_MOVIE_OBJECT"
 
-var Bundle.movieBundle: Movie
+var Bundle?.movieBundle: Movie
     get() {
-        return this.getParcelable(KEY_MOVIE_OBJECT) ?: throw IllegalArgumentException("No movie in bundle")
+        return this?.getParcelable(KEY_MOVIE_OBJECT) ?: throw IllegalArgumentException("No movie in bundle")
     }
     set(value) {
-        putParcelable(KEY_MOVIE_OBJECT, value)
+        this?.putParcelable(KEY_MOVIE_OBJECT, value)
     }

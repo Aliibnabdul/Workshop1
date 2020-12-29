@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity(), FragmentMoviesList.ClickListener {
             supportFragmentManager.beginTransaction()
                     .apply {
                         add(R.id.fragments_container, FragmentMoviesList.newInstance())
+                        setReorderingAllowed(true)
                         commit()
                     }
         }
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity(), FragmentMoviesList.ClickListener {
                 .apply {
                     replace(R.id.fragments_container, FragmentMoviesDetails.newInstance(movie))
                     addToBackStack(null)
+                    setReorderingAllowed(true)
                     commit()
                 }
     }

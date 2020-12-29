@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import coil.load
+import com.bumptech.glide.Glide
 import com.example.homeworkAA.adapter.castList.CastListAdapter
 import com.example.homeworkAA.data.models.Movie
 import com.example.homeworkAA.databinding.FragmentMoviesDetailsBinding
@@ -24,23 +24,30 @@ class FragmentMoviesDetails : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val movie: Movie? = arguments?.movieBundle
-        movie?.let { initView(it) }
+        val movie: Movie = arguments.movieBundle
+        initViews(movie)
     }
 
-    private fun initView(movie: Movie){
+    private fun initViews(movie: Movie) {
         binding.apply {
             tvBack.setOnClickListener {
                 requireActivity().onBackPressed()
             }
-            ivBackImage.load(movie.detailsBackImage)
-            tvAgeLimit.text = resources.getString(R.string.age_limit_13plus, movie.ageLimit)
-            tvGenre.text = movie.genre.joinToString(separator = ", ")
-            ratingBar.rating = movie.rating
-            tvReviews.text = resources.getString(R.string.movie_reviews, movie.reviews)
-            tvName.text = movie.name
-            tvDescription.text = movie.description
-            rvCast.adapter = CastListAdapter(movie.actors)
+            Glide.with(binding.root.context)
+                .load(movie.backdrop)
+                .into(binding.ivBackImage)
+            tvAgeLimit.text = resources.getString(R.string.age_limit_13plus, movie.minimumAge)
+            tvGenre.text = movie.genres.joinToString(separator = ", ") { it.name }
+            ratingBar.rating = movie.ratings
+            tvReviews.text = resources.getString(R.string.movie_reviews, movie.numberOfRatings)
+            tvName.text = movie.title
+            tvDescription.text = movie.overview
+            tvCast.visibility = if (movie.actors.isEmpty()) {
+                View.GONE
+            } else {
+                rvCast.adapter = CastListAdapter(movie.actors)
+                View.VISIBLE
+            }
         }
     }
 
