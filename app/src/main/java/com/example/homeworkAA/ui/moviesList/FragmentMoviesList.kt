@@ -1,36 +1,22 @@
-package com.example.homeworkAA
+package com.example.homeworkAA.ui.moviesList
 
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.homeworkAA.adapter.moviesList.MovieListAdapter
-import com.example.homeworkAA.data.loadMovies
-import com.example.homeworkAA.data.models.Movie
+import com.example.homeworkAA.ViewModelFactory
 import com.example.homeworkAA.databinding.FragmentMoviesListBinding
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class FragmentMoviesList : Fragment() {
     private lateinit var binding: FragmentMoviesListBinding
     private lateinit var listener: ClickListener
-    private lateinit var movieListAdapter: MovieListAdapter
 
-    private val exceptionHandler = CoroutineExceptionHandler { coroutineContext, exception ->
-        Log.d(
-            "SCOPE_TAG", "CurrentThread: ${Thread.currentThread().name}. " +
-                    "CoroutineExceptionHandler got $exception in $coroutineContext"
-        )
-    }
-
-    private val coroutineScope = CoroutineScope(Dispatchers.Main + exceptionHandler)
+    private val moviesViewModel: MoviesListViewModel by viewModels { ViewModelFactory() }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -55,22 +41,25 @@ class FragmentMoviesList : Fragment() {
             Configuration.ORIENTATION_LANDSCAPE -> 4
             else -> 3
         }
-        movieListAdapter = MovieListAdapter(listener::moveToFragment)
+
+        val movieListAdapter = MovieListAdapter(listener::moveToFragment)
         binding.rvMovies.apply {
             layoutManager = GridLayoutManager(requireContext(), recyclerColumns)
             adapter = movieListAdapter
         }
+
+        moviesViewModel.moviesListLiveData.observe(viewLifecycleOwner, {
+            movieListAdapter.moviesList = it
+        })
     }
 
-    override fun onStart() {
-        super.onStart()
-        coroutineScope.launch {
-            movieListAdapter.moviesList = loadMovies(requireContext())
-        }
+    override fun onResume() {
+        super.onResume()
+        moviesViewModel.refreshMoviesList(requireContext())
     }
 
     interface ClickListener {
-        fun moveToFragment(movie: Movie)
+        fun moveToFragment(id: Int)
     }
 
     companion object {

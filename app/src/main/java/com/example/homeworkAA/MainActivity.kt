@@ -2,8 +2,9 @@ package com.example.homeworkAA
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.homeworkAA.data.models.Movie
 import com.example.homeworkAA.databinding.ActivityMainBinding
+import com.example.homeworkAA.ui.movieDetails.FragmentMoviesDetails
+import com.example.homeworkAA.ui.moviesList.FragmentMoviesList
 
 class MainActivity : AppCompatActivity(), FragmentMoviesList.ClickListener {
     private lateinit var binding: ActivityMainBinding
@@ -15,21 +16,21 @@ class MainActivity : AppCompatActivity(), FragmentMoviesList.ClickListener {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                    .apply {
-                        add(R.id.fragments_container, FragmentMoviesList.newInstance())
-                        setReorderingAllowed(true)
-                        commit()
-                    }
-        }
-    }
-
-    override fun moveToFragment(movie: Movie) {
-        supportFragmentManager.beginTransaction()
                 .apply {
-                    replace(R.id.fragments_container, FragmentMoviesDetails.newInstance(movie))
-                    addToBackStack(null)
+                    add(R.id.fragments_container, FragmentMoviesList.newInstance())
                     setReorderingAllowed(true)
                     commit()
                 }
+        }
+    }
+
+    override fun moveToFragment(id: Int) {
+        supportFragmentManager.beginTransaction()
+            .apply {
+                replace(R.id.fragments_container, FragmentMoviesDetails.newInstance(id))
+                addToBackStack(null)
+                setReorderingAllowed(true)
+                commit()
+            }
     }
 }

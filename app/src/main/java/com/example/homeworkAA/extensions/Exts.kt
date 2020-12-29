@@ -4,12 +4,12 @@ import android.os.Bundle
 import com.example.homeworkAA.data.models.Movie
 import java.lang.IllegalArgumentException
 
-private const val KEY_MOVIE_OBJECT = "KEY_MOVIE_OBJECT"
+private const val KEY_MOVIE_ID = "KEY_MOVIE_ID"
 
-var Bundle?.movieBundle: Movie
+var Bundle?.movieIdBundle: Int
     get() {
-        return this?.getParcelable(KEY_MOVIE_OBJECT) ?: throw IllegalArgumentException("No movie in bundle")
+        return this?.getInt(KEY_MOVIE_ID) ?: throw IllegalArgumentException("No movie in bundle")
     }
     set(value) {
-        this?.putParcelable(KEY_MOVIE_OBJECT, value)
+        this?.putInt(KEY_MOVIE_ID, value)
     }

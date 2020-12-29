@@ -1,4 +1,4 @@
-package com.example.homeworkAA.adapter.moviesList
+package com.example.homeworkAA.ui.moviesList
 
 import android.content.res.Resources
 import androidx.recyclerview.widget.RecyclerView

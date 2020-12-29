@@ -1,10 +1,11 @@
-package com.example.homeworkAA.adapter.castList
+package com.example.homeworkAA.ui.movieDetails
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.homeworkAA.data.models.Actor
 import com.example.homeworkAA.databinding.CastRecyclerItemBinding
+import com.example.homeworkAA.ui.movieDetails.CastListViewHolder
 
 class CastListAdapter(private val actorsList: List<Actor>) :
     RecyclerView.Adapter<CastListViewHolder>() {

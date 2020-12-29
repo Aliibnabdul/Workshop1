@@ -1,4 +1,4 @@
-package com.example.homeworkAA.adapter.moviesList
+package com.example.homeworkAA.ui.moviesList
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.homeworkAA.data.models.Movie
 import com.example.homeworkAA.databinding.ViewHolderMovieBinding
 
-class MovieListAdapter(private val listener: (Movie) -> Unit) :
+class MovieListAdapter(private val listener: (Int) -> Unit) :
     RecyclerView.Adapter<MovieListViewHolder>() {
     var moviesList: List<Movie> = listOf()
         set(value) {
@@ -28,7 +28,7 @@ class MovieListAdapter(private val listener: (Movie) -> Unit) :
         holder.apply {
             onBind(moviesList[position])
             itemView.setOnClickListener {
-                listener(moviesList[position])
+                listener(moviesList[position].id)
             }
         }
     }
