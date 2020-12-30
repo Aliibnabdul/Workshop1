@@ -6,12 +6,8 @@ import androidx.lifecycle.ViewModel
 import com.example.homeworkAA.data.MoviesRepository
 import com.example.homeworkAA.data.models.Movie
 
-class MovieDetailsViewModel(private val repository: MoviesRepository) : ViewModel() {
+class MovieDetailsViewModel(repository: MoviesRepository, id: Int) : ViewModel() {
 
-    private val mutableMovie = MutableLiveData<Movie>()
-    val movieLiveData: LiveData<Movie> get() = mutableMovie
+    val movieLiveData: LiveData<Movie> = MutableLiveData(repository.getMovie(id))
 
-    fun refreshMovie(id: Int) {
-        mutableMovie.value = repository.getMovie(id)
-    }
 }

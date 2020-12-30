@@ -8,12 +8,11 @@ import kotlinx.coroutines.withContext
 object MoviesRepository {
     private lateinit var list: List<Movie>
 
-    suspend fun getMoviesList(c: Context): List<Movie> =
-        withContext(Dispatchers.Default) {
-            list = loadMovies(c)
-            list
-        }
+    suspend fun getMoviesList(c: Context): List<Movie> {
+        list = loadMovies(c)
+        return list
+    }
 
-    fun getMovie(id: Int): Movie? =
-        list.singleOrNull { it.id == id }
+    fun getMovie(id: Int): Movie =
+        list.find { it.id == id }!!
 }

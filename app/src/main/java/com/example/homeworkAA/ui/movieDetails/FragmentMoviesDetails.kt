@@ -8,14 +8,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.homeworkAA.R
-import com.example.homeworkAA.ViewModelFactory
 import com.example.homeworkAA.data.models.Movie
 import com.example.homeworkAA.databinding.FragmentMoviesDetailsBinding
 import com.example.homeworkAA.extensions.movieIdBundle
 
 class FragmentMoviesDetails : Fragment() {
     private lateinit var binding: FragmentMoviesDetailsBinding
-    private val movieDetailsViewModel: MovieDetailsViewModel by viewModels { ViewModelFactory() }
+    private val movieDetailsViewModel: MovieDetailsViewModel by viewModels {
+        DetailsViewModelFactory(arguments.movieIdBundle)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,12 +31,6 @@ class FragmentMoviesDetails : Fragment() {
         movieDetailsViewModel.movieLiveData.observe(viewLifecycleOwner, {
             initViews(it)
         })
-    }
-
-    override fun onResume() {
-        super.onResume()
-        val movieId: Int = arguments.movieIdBundle
-        movieDetailsViewModel.refreshMovie(movieId)
     }
 
     private fun initViews(movie: Movie) {

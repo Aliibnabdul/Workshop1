@@ -9,14 +9,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.homeworkAA.ViewModelFactory
+import com.example.homeworkAA.data.models.Movie
 import com.example.homeworkAA.databinding.FragmentMoviesListBinding
 
 class FragmentMoviesList : Fragment() {
     private lateinit var binding: FragmentMoviesListBinding
     private lateinit var listener: ClickListener
 
-    private val moviesViewModel: MoviesListViewModel by viewModels { ViewModelFactory() }
+    private val moviesViewModel: MoviesListViewModel by viewModels { ListViewModelFactory() }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -53,13 +53,13 @@ class FragmentMoviesList : Fragment() {
         })
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
         moviesViewModel.refreshMoviesList(requireContext())
     }
 
     interface ClickListener {
-        fun moveToFragment(id: Int)
+        fun moveToFragment(movie: Movie)
     }
 
     companion object {

@@ -7,16 +7,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.homeworkAA.data.MoviesRepository
 import com.example.homeworkAA.data.models.Movie
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MoviesListViewModel(private val repository: MoviesRepository): ViewModel() {
+class MoviesListViewModel(private val repository: MoviesRepository) : ViewModel() {
 
     private val mutableMoviesList = MutableLiveData<List<Movie>>()
     val moviesListLiveData: LiveData<List<Movie>> get() = mutableMoviesList
 
-    fun refreshMoviesList(c: Context){
-        viewModelScope.launch {
-            mutableMoviesList.value = repository.getMoviesList(c)
+    fun refreshMoviesList(c: Context) {
+        viewModelScope.launch(Dispatchers.IO) {
+            mutableMoviesList.postValue(repository.getMoviesList(c))
         }
     }
 }
