@@ -1,4 +1,4 @@
-package com.example.homeworkAA.adapter.castList
+package com.example.homeworkAA.ui.movieDetails
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide

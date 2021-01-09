@@ -1,18 +1,22 @@
-package com.example.homeworkAA
+package com.example.homeworkAA.ui.movieDetails
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
-import com.example.homeworkAA.adapter.castList.CastListAdapter
+import com.example.homeworkAA.R
 import com.example.homeworkAA.data.models.Movie
 import com.example.homeworkAA.databinding.FragmentMoviesDetailsBinding
-import com.example.homeworkAA.extensions.movieBundle
+import com.example.homeworkAA.extensions.movieIdBundle
 
 class FragmentMoviesDetails : Fragment() {
     private lateinit var binding: FragmentMoviesDetailsBinding
+    private val movieDetailsViewModel: MovieDetailsViewModel by viewModels {
+        DetailsViewModelFactory(arguments.movieIdBundle)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,8 +28,9 @@ class FragmentMoviesDetails : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val movie: Movie = arguments.movieBundle
-        initViews(movie)
+        movieDetailsViewModel.movieLiveData.observe(viewLifecycleOwner, {
+            initViews(it)
+        })
     }
 
     private fun initViews(movie: Movie) {
@@ -52,10 +57,10 @@ class FragmentMoviesDetails : Fragment() {
     }
 
     companion object {
-        fun newInstance(movie: Movie): FragmentMoviesDetails {
+        fun newInstance(id: Int): FragmentMoviesDetails {
             return FragmentMoviesDetails().apply {
                 arguments = Bundle().also {
-                    it.movieBundle = movie
+                    it.movieIdBundle = id
                 }
             }
         }
