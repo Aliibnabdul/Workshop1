@@ -53,11 +53,6 @@ class FragmentMoviesList : Fragment() {
         })
     }
 
-    override fun onStart() {
-        super.onStart()
-        moviesViewModel.refreshMoviesList(requireContext())
-    }
-
     interface ClickListener {
         fun moveToFragment(movie: Movie)
     }

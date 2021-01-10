@@ -13,7 +13,7 @@ class MovieListViewHolder(private val binding: ViewHolderMovieBinding) :
 
     fun onBind(movie: Movie) {
         Glide.with(itemView.context)
-            .load(movie.poster)
+            .load(movie.posterUrl)
             .into(binding.ivBackImage)
 
         binding.apply {

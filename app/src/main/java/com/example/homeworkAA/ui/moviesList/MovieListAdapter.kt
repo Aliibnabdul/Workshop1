@@ -12,6 +12,11 @@ class MovieListAdapter(private val listener: (Movie) -> Unit) :
         set(value) {
             field = value
             notifyDataSetChanged()
+
+//            val diffUtilsCallback = MoviesDiffUtil(moviesList, value)
+//            field = value
+//            val diffResult = DiffUtil.calculateDiff(diffUtilsCallback)
+//            diffResult.dispatchUpdatesTo(this)
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListViewHolder {

@@ -1,6 +1,5 @@
 package com.example.homeworkAA.ui.moviesList
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,9 +14,10 @@ class MoviesListViewModel(private val repository: MoviesRepository) : ViewModel(
     private val mutableMoviesList = MutableLiveData<List<Movie>>()
     val moviesListLiveData: LiveData<List<Movie>> get() = mutableMoviesList
 
-    fun refreshMoviesList(c: Context) {
+    init {
         viewModelScope.launch(Dispatchers.IO) {
-            mutableMoviesList.postValue(repository.getMoviesList(c))
+            mutableMoviesList.postValue(repository.getMoviesList())
+            mutableMoviesList.postValue(repository.getMoviesListWithDetails())
         }
     }
 }

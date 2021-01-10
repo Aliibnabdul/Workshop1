@@ -1,18 +1,22 @@
 package com.example.homeworkAA.data
 
-import android.content.Context
 import com.example.homeworkAA.data.models.Movie
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 object MoviesRepository {
-    private lateinit var list: List<Movie>
+    private var list: List<Movie> = listOf()
 
-    suspend fun getMoviesList(c: Context): List<Movie> {
-        list = loadMovies(c)
+    suspend fun getMoviesList(): List<Movie> {
+        list = loadMovies()
         return list
     }
 
-    fun getMovie(id: Int): Movie =
-        list.find { it.id == id }!!
+    suspend fun getMoviesListWithDetails(): List<Movie> {
+        list = loadMoviesDetails(list)
+        return list
+    }
+
+    suspend fun getMovieWithActors(id: Int): Movie {
+        val movie = list.find { it.id == id }!!
+        return loadActors(movie)
+    }
 }

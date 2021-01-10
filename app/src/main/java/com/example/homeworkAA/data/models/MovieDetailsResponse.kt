@@ -3,8 +3,7 @@ package com.example.homeworkAA.data.models
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Genre(
-	val name: String,
-	val id: Int
+data class MovieDetailsResponse(
+    val runtime: Int? = null,
+    val genres: List<Genre>
 )
-
