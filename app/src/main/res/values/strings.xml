@@ -12,4 +12,7 @@
     <string name="movies_list_title">Movies list</string>
     <string name="movies_list_minutes">%d min</string>
     <string name="movies_list_like">Like icon</string>
+    <string name="retry">Retry</string>
+    <string name="check_internet_connection">Check internet connection!</string>
+
 </resources>

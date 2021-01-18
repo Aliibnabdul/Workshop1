@@ -7,7 +7,7 @@ import com.example.homeworkAA.R
 import com.example.homeworkAA.data.models.Movie
 import com.example.homeworkAA.databinding.ViewHolderMovieBinding
 
-class MovieListViewHolder(private val binding: ViewHolderMovieBinding) :
+class MoviesListViewHolder(val binding: ViewHolderMovieBinding) :
     RecyclerView.ViewHolder(binding.root) {
     private val resources: Resources = binding.root.resources
 
@@ -22,7 +22,7 @@ class MovieListViewHolder(private val binding: ViewHolderMovieBinding) :
             ratingBar.rating = movie.ratings
             tvReviews.text = resources.getString(R.string.movie_reviews, movie.numberOfRatings)
             tvName.text = movie.title
-            tvDuration.text = resources.getString(R.string.movies_list_minutes, movie.runtime)
+            tvRuntime.text = resources.getString(R.string.movies_list_minutes, movie.runtime)
         }
         setLikedState(false)
     }

@@ -1,8 +1,6 @@
 package com.example.homeworkAA.extensions
 
 import android.os.Bundle
-import com.example.homeworkAA.data.models.Movie
-import java.lang.IllegalArgumentException
 
 private const val KEY_MOVIE_ID = "KEY_MOVIE_ID"
 

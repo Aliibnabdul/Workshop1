@@ -10,12 +10,13 @@ import com.bumptech.glide.Glide
 import com.example.homeworkAA.R
 import com.example.homeworkAA.data.models.Movie
 import com.example.homeworkAA.databinding.FragmentMoviesDetailsBinding
+import com.example.homeworkAA.di.Injection
 import com.example.homeworkAA.extensions.movieIdBundle
 
 class FragmentMovieDetails : Fragment() {
     private lateinit var binding: FragmentMoviesDetailsBinding
     private val movieDetailsViewModel: MovieDetailsViewModel by viewModels {
-        DetailsViewModelFactory(arguments.movieIdBundle)
+        Injection.provideDetailsViewModelFactory(arguments.movieIdBundle)
     }
 
     override fun onCreateView(
