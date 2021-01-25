@@ -22,10 +22,10 @@ interface NetworkInterface {
     ): MoviesListResponse
 
     @GET("movie/{id}?api_key=528872f1b83a56c38aafb7c9fd9dc105&language=en-US")
-    suspend fun getMovieDetailsResponse(@Path("id") id: Int): MovieDetailsResponse
+    suspend fun getMovieDetailsResponse(@Path("id") id: Long): MovieDetailsResponse
 
     @GET("movie/{id}/credits?api_key=528872f1b83a56c38aafb7c9fd9dc105&language=en-US")
-    suspend fun getCastResponse(@Path("id") id: Int): CastResponse
+    suspend fun getCastResponse(@Path("id") id: Long): CastResponse
 
     companion object {
         @Suppress("EXPERIMENTAL_API_USAGE")

@@ -7,7 +7,7 @@ import com.example.homeworkAA.R
 import com.example.homeworkAA.data.models.Movie
 import com.example.homeworkAA.databinding.ViewHolderMovieBinding
 
-class MoviesListViewHolder(val binding: ViewHolderMovieBinding) :
+class MoviesListViewHolder(private val binding: ViewHolderMovieBinding) :
     RecyclerView.ViewHolder(binding.root) {
     private val resources: Resources = binding.root.resources
 
@@ -18,7 +18,7 @@ class MoviesListViewHolder(val binding: ViewHolderMovieBinding) :
 
         binding.apply {
             tvAgeLimit.text = resources.getString(R.string.age_limit_13plus, movie.minimumAge)
-            tvGenre.text = movie.genres.joinToString(separator = ", ") { it.name }
+            tvGenre.text = movie.genres
             ratingBar.rating = movie.ratings
             tvReviews.text = resources.getString(R.string.movie_reviews, movie.numberOfRatings)
             tvName.text = movie.title

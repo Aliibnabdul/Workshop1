@@ -5,7 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Actor(
-    val id: Int,
+    @SerialName("id")
+    val actorId: Int,
     val name: String,
     @SerialName("profile_path")
     var profilePath: String? = null

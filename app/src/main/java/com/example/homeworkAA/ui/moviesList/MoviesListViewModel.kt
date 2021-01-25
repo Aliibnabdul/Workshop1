@@ -2,6 +2,7 @@ package com.example.homeworkAA.ui.moviesList
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.homeworkAA.data.MoviesRepository
@@ -12,13 +13,8 @@ class MoviesListViewModel(private val repository: MoviesRepository) : ViewModel(
     private var currentQueryValue: String? = null
     private var currentSearchResult: Flow<PagingData<Movie>>? = null
 
-    fun searchRepo(queryString: String): Flow<PagingData<Movie>> {
-        val lastResult = currentSearchResult
-
-        if (queryString == currentQueryValue && lastResult != null) {
-            return lastResult
-        }
-
+    @ExperimentalPagingApi
+    fun getFlowPagingData(queryString: String): Flow<PagingData<Movie>> {
         currentQueryValue = queryString
         val newResult: Flow<PagingData<Movie>> = repository.getSearchResultStream(queryString)
             .cachedIn(viewModelScope)

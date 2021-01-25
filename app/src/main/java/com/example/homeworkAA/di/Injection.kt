@@ -11,13 +11,13 @@ import com.example.homeworkAA.ui.moviesList.ListViewModelFactory
 object Injection {
     private lateinit var moviesRepository: MoviesRepository
     private lateinit var networkInterface: NetworkInterface
-    private lateinit var moviesDatabase: MoviesDatabase
+    private lateinit var database: MoviesDatabase
     private lateinit var ListViewModelFactory: ListViewModelFactory
 
     fun setup(context: Context) {
         networkInterface = NetworkInterface.getService()
-        moviesDatabase = MoviesDatabase()
-        moviesRepository = MoviesRepository(networkInterface, moviesDatabase)
+        database = MoviesDatabase.getInstance(context)
+        moviesRepository = MoviesRepository(networkInterface, database, context)
         ListViewModelFactory = ListViewModelFactory(moviesRepository)
     }
 
@@ -25,7 +25,7 @@ object Injection {
         return ListViewModelFactory
     }
 
-    fun provideDetailsViewModelFactory(id: Int): ViewModelProvider.Factory {
+    fun provideDetailsViewModelFactory(id: Long): ViewModelProvider.Factory {
         return DetailsViewModelFactory(moviesRepository, id)
     }
 }

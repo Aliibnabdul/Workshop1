@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.homeworkAA.R
-import com.example.homeworkAA.data.models.Movie
+import com.example.homeworkAA.data.models.MovieWithActors
 import com.example.homeworkAA.databinding.FragmentMoviesDetailsBinding
 import com.example.homeworkAA.di.Injection
 import com.example.homeworkAA.extensions.movieIdBundle
@@ -34,31 +34,33 @@ class FragmentMovieDetails : Fragment() {
         })
     }
 
-    private fun initViews(movie: Movie) {
+    private fun initViews(movieWithActors: MovieWithActors) {
         binding.apply {
             tvBack.setOnClickListener {
                 requireActivity().onBackPressed()
             }
             Glide.with(binding.root.context)
-                .load(movie.backdropUrl)
+                .load(movieWithActors.movie.backdropUrl)
                 .into(binding.ivBackImage)
-            tvAgeLimit.text = resources.getString(R.string.age_limit_13plus, movie.minimumAge)
-            tvGenre.text = movie.genres.joinToString(separator = ", ") { it.name }
-            ratingBar.rating = movie.ratings
-            tvReviews.text = resources.getString(R.string.movie_reviews, movie.numberOfRatings)
-            tvName.text = movie.title
-            tvDescription.text = movie.overview
-            tvCast.visibility = if (movie.actors.isEmpty()) {
+            tvAgeLimit.text =
+                resources.getString(R.string.age_limit_13plus, movieWithActors.movie.minimumAge)
+            tvGenre.text = movieWithActors.movie.genres
+            ratingBar.rating = movieWithActors.movie.ratings
+            tvReviews.text =
+                resources.getString(R.string.movie_reviews, movieWithActors.movie.numberOfRatings)
+            tvName.text = movieWithActors.movie.title
+            tvDescription.text = movieWithActors.movie.overview
+            tvCast.visibility = if (movieWithActors.actors.isEmpty()) {
                 View.GONE
             } else {
-                rvCast.adapter = CastListAdapter(movie.actors)
+                rvCast.adapter = CastListAdapter(movieWithActors.actors)
                 View.VISIBLE
             }
         }
     }
 
     companion object {
-        fun newInstance(id: Int): FragmentMovieDetails {
+        fun newInstance(id: Long): FragmentMovieDetails {
             return FragmentMovieDetails().apply {
                 arguments = Bundle().also {
                     it.movieIdBundle = id

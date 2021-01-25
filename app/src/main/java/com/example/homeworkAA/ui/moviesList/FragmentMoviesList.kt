@@ -11,6 +11,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.homeworkAA.data.models.Movie
@@ -19,7 +20,6 @@ import com.example.homeworkAA.di.Injection
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kotlinx.serialization.ExperimentalSerializationApi
 
 class FragmentMoviesList : Fragment() {
     private lateinit var binding: FragmentMoviesListBinding
@@ -45,7 +45,7 @@ class FragmentMoviesList : Fragment() {
         return binding.root
     }
 
-    @ExperimentalSerializationApi
+    @ExperimentalPagingApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -61,8 +61,8 @@ class FragmentMoviesList : Fragment() {
         binding.rvMovies.apply {
             layoutManager = recyclerLayoutManager
             adapter = moviesListAdapter.withLoadStateHeaderAndFooter(
-                header = ReposLoadStateAdapter { moviesListAdapter.retry() },
-                footer = ReposLoadStateAdapter { moviesListAdapter.retry() }
+                header = LoadingStateAdapter { moviesListAdapter.retry() },
+                footer = LoadingStateAdapter { moviesListAdapter.retry() }
             )
         }
 
@@ -87,11 +87,11 @@ class FragmentMoviesList : Fragment() {
         search(query)
     }
 
-    @ExperimentalSerializationApi
+    @ExperimentalPagingApi
     private fun search(query: String) {
         searchJob?.cancel()
         searchJob = lifecycleScope.launch {
-            moviesViewModel.searchRepo(query).collectLatest {
+            moviesViewModel.getFlowPagingData(query).collectLatest {
 
                 moviesListAdapter.submitData(it)
             }

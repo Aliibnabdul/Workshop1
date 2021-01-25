@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.homeworkAA.data.MoviesRepository
 
-class DetailsViewModelFactory(private val repository: MoviesRepository, private val id: Int) :
+class DetailsViewModelFactory(private val repository: MoviesRepository, private val id: Long) :
     ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")

@@ -8,7 +8,7 @@ import com.example.homeworkAA.data.models.Movie
 import com.example.homeworkAA.databinding.ViewHolderMovieBinding
 
 class MoviesListAdapter(private val listener: (Movie) -> Unit) :
-    PagingDataAdapter<Movie, MoviesListViewHolder>(REPO_COMPARATOR) {
+    PagingDataAdapter<Movie, MoviesListViewHolder>(DIFF_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesListViewHolder {
         return MoviesListViewHolder(
@@ -34,7 +34,7 @@ class MoviesListAdapter(private val listener: (Movie) -> Unit) :
     }
 
     companion object {
-        private val REPO_COMPARATOR = object : DiffUtil.ItemCallback<Movie>() {
+        private val DIFF_COMPARATOR = object : DiffUtil.ItemCallback<Movie>() {
             override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean =
                 oldItem.id == newItem.id
 

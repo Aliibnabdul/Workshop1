@@ -23,7 +23,7 @@ data class ResultsItem(
 	val backdropPath: String? = null,
 	@SerialName("vote_average")
 	val voteAverage: Float,
-	val id: Int,
+	val id: Long,
 	val adult: Boolean,
 	@SerialName("vote_count")
 	val voteCount: Int,
