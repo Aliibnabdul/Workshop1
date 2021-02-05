@@ -1,10 +1,11 @@
-package com.example.homeworkAA.data.models
+package com.example.homeworkAA.data.db.entities
 
 import androidx.room.Embedded
 import androidx.room.Relation
+import com.example.homeworkAA.data.db.entities.ActorEntity
 
 data class MovieWithActors(
-    @Embedded val movie: Movie,
+    @Embedded val movie: MovieEntity,
 
     @Relation(
         parentColumn = "id",

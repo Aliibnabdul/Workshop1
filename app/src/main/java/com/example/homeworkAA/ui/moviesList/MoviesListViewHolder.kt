@@ -4,14 +4,17 @@ import android.content.res.Resources
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.homeworkAA.R
-import com.example.homeworkAA.data.models.Movie
+import com.example.homeworkAA.data.db.entities.MovieEntity
 import com.example.homeworkAA.databinding.ViewHolderMovieBinding
 
-class MoviesListViewHolder(private val binding: ViewHolderMovieBinding) :
+class MoviesListViewHolder(
+    private val binding: ViewHolderMovieBinding,
+    private val listener: (MovieEntity) -> Unit
+) :
     RecyclerView.ViewHolder(binding.root) {
     private val resources: Resources = binding.root.resources
 
-    fun onBind(movie: Movie) {
+    fun onBind(movie: MovieEntity) {
         Glide.with(itemView.context)
             .load(movie.posterUrl)
             .into(binding.ivBackImage)
@@ -25,6 +28,7 @@ class MoviesListViewHolder(private val binding: ViewHolderMovieBinding) :
             tvRuntime.text = resources.getString(R.string.movies_list_minutes, movie.runtime)
         }
         setLikedState(false)
+        itemView.setOnClickListener { listener(movie) }
     }
 
     private fun setLikedState(liked: Boolean) {

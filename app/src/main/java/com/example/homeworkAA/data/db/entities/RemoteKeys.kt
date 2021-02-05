@@ -1,4 +1,4 @@
-package com.example.homeworkAA.db
+package com.example.homeworkAA.data.db.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

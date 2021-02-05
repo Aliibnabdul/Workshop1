@@ -1,9 +1,9 @@
-package com.example.homeworkAA.data.models
+package com.example.homeworkAA.data.network.dto
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Genre(
+data class GenreDto(
 	val name: String,
 	val id: Int
 )

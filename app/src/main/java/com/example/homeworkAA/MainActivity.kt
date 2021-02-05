@@ -2,7 +2,7 @@ package com.example.homeworkAA
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.homeworkAA.data.models.Movie
+import com.example.homeworkAA.data.db.entities.MovieEntity
 import com.example.homeworkAA.databinding.ActivityMainBinding
 import com.example.homeworkAA.ui.movieDetails.FragmentMovieDetails
 import com.example.homeworkAA.ui.moviesList.FragmentMoviesList
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity(), FragmentMoviesList.ClickListener {
         }
     }
 
-    override fun moveToFragment(movie: Movie) {
+    override fun moveToFragment(movie: MovieEntity) {
         supportFragmentManager.beginTransaction()
             .apply {
                 replace(R.id.fragments_container, FragmentMovieDetails.newInstance(movie.id))

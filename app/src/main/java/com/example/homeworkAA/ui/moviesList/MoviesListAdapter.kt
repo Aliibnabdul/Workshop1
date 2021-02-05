@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import com.example.homeworkAA.data.models.Movie
+import com.example.homeworkAA.data.db.entities.MovieEntity
 import com.example.homeworkAA.databinding.ViewHolderMovieBinding
 
-class MoviesListAdapter(private val listener: (Movie) -> Unit) :
-    PagingDataAdapter<Movie, MoviesListViewHolder>(DIFF_COMPARATOR) {
+class MoviesListAdapter(private val listener: (MovieEntity) -> Unit) :
+    PagingDataAdapter<MovieEntity, MoviesListViewHolder>(DIFF_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesListViewHolder {
         return MoviesListViewHolder(
@@ -16,29 +16,22 @@ class MoviesListAdapter(private val listener: (Movie) -> Unit) :
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            )
+            ),
+            listener
         )
 
     }
 
     override fun onBindViewHolder(holder: MoviesListViewHolder, position: Int) {
-        val repoItem = getItem(position)
-        if (repoItem != null) {
-            holder.apply {
-                onBind(repoItem)
-                itemView.setOnClickListener {
-                    listener(repoItem)
-                }
-            }
-        }
+        getItem(position)?.let(holder::onBind)
     }
 
     companion object {
-        private val DIFF_COMPARATOR = object : DiffUtil.ItemCallback<Movie>() {
-            override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean =
+        private val DIFF_COMPARATOR = object : DiffUtil.ItemCallback<MovieEntity>() {
+            override fun areItemsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean =
                 oldItem.id == newItem.id
 
-            override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean =
+            override fun areContentsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean =
                 oldItem == newItem
         }
     }

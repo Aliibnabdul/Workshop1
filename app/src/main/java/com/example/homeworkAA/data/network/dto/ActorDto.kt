@@ -1,13 +1,13 @@
-package com.example.homeworkAA.data.models
+package com.example.homeworkAA.data.network.dto
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Actor(
+data class ActorDto(
     @SerialName("id")
     val actorId: Int,
     val name: String,
     @SerialName("profile_path")
-    var profilePath: String? = null
+    var profilePath: String?
 )

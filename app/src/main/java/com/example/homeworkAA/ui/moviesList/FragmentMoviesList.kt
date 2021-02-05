@@ -1,33 +1,28 @@
 package com.example.homeworkAA.ui.moviesList
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.homeworkAA.data.models.Movie
+import com.example.homeworkAA.data.db.entities.MovieEntity
 import com.example.homeworkAA.databinding.FragmentMoviesListBinding
 import com.example.homeworkAA.di.Injection
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 class FragmentMoviesList : Fragment() {
     private lateinit var binding: FragmentMoviesListBinding
     private lateinit var listener: ClickListener
 
+    @ExperimentalPagingApi
     private val moviesViewModel: MoviesListViewModel by viewModels { Injection.provideListViewModelFactory() }
-    private lateinit var moviesListAdapter: MoviesListAdapter
-    private var searchJob: Job? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -55,7 +50,7 @@ class FragmentMoviesList : Fragment() {
             else -> 3
         }
 
-        moviesListAdapter = MoviesListAdapter(listener::moveToFragment)
+        val moviesListAdapter = MoviesListAdapter(listener::moveToFragment)
         val recyclerLayoutManager = GridLayoutManager(requireContext(), recyclerColumns)
 
         binding.rvMovies.apply {
@@ -66,40 +61,28 @@ class FragmentMoviesList : Fragment() {
             )
         }
 
-        binding.retryButton.setOnClickListener { moviesListAdapter.retry() }
-
         moviesListAdapter.addLoadStateListener { loadState ->
-            binding.rvMovies.isVisible = loadState.source.refresh is LoadState.NotLoading
+            if (loadState.source.refresh is LoadState.Error) {
+                AlertDialog.Builder(requireContext())
+                    .setMessage("Check internet connection!")
+                    .setPositiveButton("RETRY") { _, _ ->
+                        moviesListAdapter.retry()
+                    }
+                    .setCancelable(false)
+                    .show()
+
+            }
+
             binding.progressBar.isVisible = loadState.source.refresh is LoadState.Loading
-            binding.retryButton.isVisible = loadState.source.refresh is LoadState.Error
-            binding.tvCheckInternet.isVisible = loadState.source.refresh is LoadState.Error
-
-            val errorState = loadState.source.append as? LoadState.Error
-                ?: loadState.source.prepend as? LoadState.Error
-                ?: loadState.append as? LoadState.Error
-                ?: loadState.prepend as? LoadState.Error
-            errorState?.let {
-                Log.d("EXCEPTION_TAG", it.error.toString())
-            }
         }
 
-        val query = "now_playing"
-        search(query)
-    }
-
-    @ExperimentalPagingApi
-    private fun search(query: String) {
-        searchJob?.cancel()
-        searchJob = lifecycleScope.launch {
-            moviesViewModel.getFlowPagingData(query).collectLatest {
-
-                moviesListAdapter.submitData(it)
-            }
-        }
+        moviesViewModel.liveDataPagingData.observe(viewLifecycleOwner, {
+            moviesListAdapter.submitData(viewLifecycleOwner.lifecycle, it)
+        })
     }
 
     interface ClickListener {
-        fun moveToFragment(movie: Movie)
+        fun moveToFragment(movie: MovieEntity)
     }
 
     companion object {

@@ -1,9 +1,9 @@
-package com.example.homeworkAA.data
+package com.example.homeworkAA.data.network
 
 import com.example.homeworkAA.BuildConfig
-import com.example.homeworkAA.data.models.CastResponse
-import com.example.homeworkAA.data.models.MovieDetailsResponse
-import com.example.homeworkAA.data.models.MoviesListResponse
+import com.example.homeworkAA.data.network.dto.CastResponse
+import com.example.homeworkAA.data.network.dto.MovieDetailsResponse
+import com.example.homeworkAA.data.network.dto.MoviesListResponse
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -14,18 +14,30 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
+private const val API_KEY = "528872f1b83a56c38aafb7c9fd9dc105"
+
 interface NetworkInterface {
-    @GET("movie/{query}?api_key=528872f1b83a56c38aafb7c9fd9dc105&language=en-US")
+    @GET("movie/{query}")
     suspend fun getMoviesListResponse(
         @Path("query") query: String,
-        @Query("page") page: Int
+        @Query("page") page: Int,
+        @Query("api_key") apiKey: String = API_KEY,
+        @Query("language") language: String = "en-US"
     ): MoviesListResponse
 
-    @GET("movie/{id}?api_key=528872f1b83a56c38aafb7c9fd9dc105&language=en-US")
-    suspend fun getMovieDetailsResponse(@Path("id") id: Long): MovieDetailsResponse
+    @GET("movie/{id}")
+    suspend fun getMovieDetailsResponse(
+        @Path("id") id: Long,
+        @Query("api_key") apiKey: String = API_KEY,
+        @Query("language") language: String = "en-US"
+    ): MovieDetailsResponse
 
-    @GET("movie/{id}/credits?api_key=528872f1b83a56c38aafb7c9fd9dc105&language=en-US")
-    suspend fun getCastResponse(@Path("id") id: Long): CastResponse
+    @GET("movie/{id}/credits")
+    suspend fun getCastResponse(
+        @Path("id") id: Long,
+        @Query("api_key") apiKey: String = API_KEY,
+        @Query("language") language: String = "en-US"
+    ): CastResponse
 
     companion object {
         @Suppress("EXPERIMENTAL_API_USAGE")

@@ -1,9 +1,10 @@
-package com.example.homeworkAA.db
+package com.example.homeworkAA.data.db.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.example.homeworkAA.data.db.entities.RemoteKeys
 
 @Dao
 interface RemoteKeysDao {

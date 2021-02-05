@@ -5,34 +5,40 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
-import com.example.homeworkAA.R
 import com.example.homeworkAA.databinding.LoadStateFooterBinding
 
 class LoadingStateViewHolder(
     private val binding: LoadStateFooterBinding,
-    retry: () -> Unit
+    onRetryClicked: () -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {
-        binding.retryButton.also {
-            it.setOnClickListener { retry.invoke() }
-        }
+        binding.retryButton.setOnClickListener { onRetryClicked.invoke() }
     }
 
     fun bind(loadState: LoadState) {
-        if (loadState is LoadState.Error) {
-            binding.errorMsg.text = loadState.error.localizedMessage
+        when (loadState) {
+            is LoadState.NotLoading -> showLoadingState(false)
+            is LoadState.Loading -> showLoadingState(true)
+            is LoadState.Error -> {
+                showLoadingState(false)
+                binding.errorMsg.text = loadState.error.localizedMessage
+            }
         }
-        binding.progressBar.isVisible = loadState is LoadState.Loading
-        binding.retryButton.isVisible = loadState !is LoadState.Loading
-        binding.errorMsg.isVisible = loadState !is LoadState.Loading
+    }
+
+    private fun showLoadingState(state: Boolean) {
+        binding.progressBar.isVisible = state
+        binding.errorContainer.isVisible = !state
     }
 
     companion object {
         fun create(parent: ViewGroup, retry: () -> Unit): LoadingStateViewHolder {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.load_state_footer, parent, false)
-            val binding = LoadStateFooterBinding.bind(view)
+            val binding = LoadStateFooterBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
             return LoadingStateViewHolder(binding, retry)
         }
     }

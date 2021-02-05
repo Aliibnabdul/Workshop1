@@ -3,8 +3,8 @@ package com.example.homeworkAA.di
 import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import com.example.homeworkAA.data.MoviesRepository
-import com.example.homeworkAA.data.NetworkInterface
-import com.example.homeworkAA.db.MoviesDatabase
+import com.example.homeworkAA.data.db.MoviesDatabase
+import com.example.homeworkAA.data.network.NetworkInterface
 import com.example.homeworkAA.ui.movieDetails.DetailsViewModelFactory
 import com.example.homeworkAA.ui.moviesList.ListViewModelFactory
 
@@ -17,7 +17,7 @@ object Injection {
     fun setup(context: Context) {
         networkInterface = NetworkInterface.getService()
         database = MoviesDatabase.getInstance(context)
-        moviesRepository = MoviesRepository(networkInterface, database, context)
+        moviesRepository = MoviesRepository(networkInterface, database)
         ListViewModelFactory = ListViewModelFactory(moviesRepository)
     }
 
