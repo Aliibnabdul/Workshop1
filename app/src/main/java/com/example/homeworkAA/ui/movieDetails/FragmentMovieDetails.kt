@@ -8,14 +8,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.homeworkAA.R
-import com.example.homeworkAA.data.models.Movie
+import com.example.homeworkAA.data.domain.Movie
 import com.example.homeworkAA.databinding.FragmentMoviesDetailsBinding
+import com.example.homeworkAA.di.Injection
 import com.example.homeworkAA.extensions.movieIdBundle
 
-class FragmentMoviesDetails : Fragment() {
+class FragmentMovieDetails : Fragment() {
     private lateinit var binding: FragmentMoviesDetailsBinding
     private val movieDetailsViewModel: MovieDetailsViewModel by viewModels {
-        DetailsViewModelFactory(arguments.movieIdBundle)
+        Injection.provideDetailsViewModelFactory(arguments.movieIdBundle)
     }
 
     override fun onCreateView(
@@ -39,12 +40,14 @@ class FragmentMoviesDetails : Fragment() {
                 requireActivity().onBackPressed()
             }
             Glide.with(binding.root.context)
-                .load(movie.backdrop)
+                .load(movie.backdropUrl)
                 .into(binding.ivBackImage)
-            tvAgeLimit.text = resources.getString(R.string.age_limit_13plus, movie.minimumAge)
-            tvGenre.text = movie.genres.joinToString(separator = ", ") { it.name }
+            tvAgeLimit.text =
+                resources.getString(R.string.age_limit_13plus, movie.minimumAge)
+            tvGenre.text = movie.genres
             ratingBar.rating = movie.ratings
-            tvReviews.text = resources.getString(R.string.movie_reviews, movie.numberOfRatings)
+            tvReviews.text =
+                resources.getString(R.string.movie_reviews, movie.numberOfRatings)
             tvName.text = movie.title
             tvDescription.text = movie.overview
             tvCast.visibility = if (movie.actors.isEmpty()) {
@@ -57,8 +60,8 @@ class FragmentMoviesDetails : Fragment() {
     }
 
     companion object {
-        fun newInstance(id: Int): FragmentMoviesDetails {
-            return FragmentMoviesDetails().apply {
+        fun newInstance(id: Long): FragmentMovieDetails {
+            return FragmentMovieDetails().apply {
                 arguments = Bundle().also {
                     it.movieIdBundle = id
                 }

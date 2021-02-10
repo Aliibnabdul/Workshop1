@@ -1,23 +1,19 @@
 package com.example.homeworkAA.ui.moviesList
 
-import android.content.Context
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.example.homeworkAA.data.MoviesRepository
-import com.example.homeworkAA.data.models.Movie
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.example.homeworkAA.data.db.entities.MovieEntity
 
 class MoviesListViewModel(private val repository: MoviesRepository) : ViewModel() {
 
-    private val mutableMoviesList = MutableLiveData<List<Movie>>()
-    val moviesListLiveData: LiveData<List<Movie>> get() = mutableMoviesList
-
-    fun refreshMoviesList(c: Context) {
-        viewModelScope.launch(Dispatchers.IO) {
-            mutableMoviesList.postValue(repository.getMoviesList(c))
-        }
-    }
+    @ExperimentalPagingApi
+    val liveDataPagingData: LiveData<PagingData<MovieEntity>>
+        get() = repository.getSearchResultStream()
+            .cachedIn(viewModelScope).asLiveData()
 }

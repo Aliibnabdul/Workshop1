@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="margin_start_end_16dp">16dp</dimen>
-    <dimen name="margin_start_end_12dp">12dp</dimen>
     <dimen name="margin_start_end_8dp">8dp</dimen>
     <dimen name="margin_cast_8dp">8dp</dimen>
     <dimen name="corners_movie_item">10dp</dimen>
