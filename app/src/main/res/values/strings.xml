@@ -14,5 +14,6 @@
     <string name="movies_list_like">Like icon</string>
     <string name="retry">Retry</string>
     <string name="check_internet_connection">Check internet connection!</string>
+    <string name="message_retry">Retry</string>
 
 </resources>

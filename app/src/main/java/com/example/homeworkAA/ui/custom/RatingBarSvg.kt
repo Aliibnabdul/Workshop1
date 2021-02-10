@@ -1,4 +1,4 @@
-package com.example.homeworkAA.customRatigBar
+package com.example.homeworkAA.ui.custom
 
 import android.annotation.SuppressLint
 import android.content.Context

@@ -62,7 +62,7 @@
         app:layout_constraintBottom_toTopOf="@+id/tvReviews"
         tools:ignore="SmallSp" />
 
-    <com.example.homeworkAA.customRatigBar.RatingBarSvg
+    <com.example.homeworkAA.ui.custom.RatingBarSvg
         android:id="@+id/ratingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

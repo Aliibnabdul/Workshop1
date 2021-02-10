@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.homeworkAA.R
-import com.example.homeworkAA.data.domain.Movie
 import com.example.homeworkAA.databinding.FragmentMoviesDetailsBinding
 import com.example.homeworkAA.di.Injection
+import com.example.homeworkAA.domain.model.Movie
 import com.example.homeworkAA.extensions.movieIdBundle
 
 class FragmentMovieDetails : Fragment() {

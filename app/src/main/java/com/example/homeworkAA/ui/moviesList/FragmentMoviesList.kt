@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.homeworkAA.R
 import com.example.homeworkAA.data.db.entities.MovieEntity
 import com.example.homeworkAA.databinding.FragmentMoviesListBinding
 import com.example.homeworkAA.di.Injection
@@ -62,15 +63,20 @@ class FragmentMoviesList : Fragment() {
         }
 
         moviesListAdapter.addLoadStateListener { loadState ->
-            if (loadState.source.refresh is LoadState.Error) {
-                AlertDialog.Builder(requireContext())
-                    .setMessage("Check internet connection!")
-                    .setPositiveButton("RETRY") { _, _ ->
-                        moviesListAdapter.retry()
-                    }
-                    .setCancelable(false)
-                    .show()
-
+            when (loadState.source.refresh) {
+                is LoadState.NotLoading -> {
+                }
+                is LoadState.Loading -> {
+                }
+                is LoadState.Error -> {
+                    AlertDialog.Builder(requireContext())
+                        .setMessage(getString(R.string.check_internet_connection))
+                        .setPositiveButton(getString(R.string.message_retry)) { _, _ ->
+                            moviesListAdapter.retry()
+                        }
+                        .setCancelable(false)
+                        .show()
+                }
             }
 
             binding.progressBar.isVisible = loadState.source.refresh is LoadState.Loading

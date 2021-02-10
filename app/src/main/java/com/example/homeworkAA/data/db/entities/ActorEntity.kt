@@ -2,7 +2,7 @@ package com.example.homeworkAA.data.db.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.homeworkAA.data.network.dto.ActorDto
+import com.example.homeworkAA.domain.model.Actor
 
 @Entity
 data class ActorEntity(
@@ -11,13 +11,21 @@ data class ActorEntity(
     val name: String,
     var profilePath: String
 ) {
+    fun toDomain(): Actor {
+        return Actor(
+            actorId = actorId,
+            name = name,
+            profilePath = profilePath
+        )
+    }
+
     companion object {
-        fun fromDto(actorDto: ActorDto, id: Long): ActorEntity {
+        fun from(actor: Actor, movieId: Long): ActorEntity {
             return ActorEntity(
-                movieId = id,
-                actorId = actorDto.actorId,
-                name = actorDto.name,
-                profilePath = "https://image.tmdb.org/t/p/w185${actorDto.profilePath}"
+                movieId = movieId,
+                actorId = actor.actorId,
+                name = actor.name,
+                profilePath = actor.profilePath
             )
         }
     }
