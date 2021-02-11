@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.homeworkAA.data.MoviesRepository
-import com.example.homeworkAA.data.domain.Movie
+import com.example.homeworkAA.domain.models.Movie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
