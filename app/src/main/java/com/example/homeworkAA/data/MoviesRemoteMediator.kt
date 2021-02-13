@@ -47,7 +47,6 @@ class MoviesRemoteMediator(
         try {
             val indexOfLastMovieInDb =
                 state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()?.index ?: 0
-            Log.d("INDEX_TAG", "indexOfLastMovieInDb $indexOfLastMovieInDb")
 
             val resultsList =
                 networkInterface.getMoviesListResponse(currentQueryValue, page).results
@@ -65,7 +64,6 @@ class MoviesRemoteMediator(
                 }
                 val prevKey = if (page == GITHUB_STARTING_PAGE_INDEX) null else page - 1
                 val nextKey = if (endOfPaginationReached) null else page + 1
-                Log.d("LOADTYPE_TAG", "nextKey $nextKey")
                 val keys = resultsList.map {
                     RemoteKeys(repoId = it.id, prevKey = prevKey, nextKey = nextKey)
                 }

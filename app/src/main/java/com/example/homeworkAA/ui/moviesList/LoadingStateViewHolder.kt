@@ -13,7 +13,7 @@ class LoadingStateViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {
-        binding.retryButton.setOnClickListener { onRetryClicked.invoke() }
+        binding.retryButton.setOnClickListener { onRetryClicked() }
     }
 
     fun bind(loadState: LoadState) {
