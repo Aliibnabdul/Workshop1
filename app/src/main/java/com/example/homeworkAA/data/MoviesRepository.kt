@@ -7,8 +7,8 @@ import androidx.paging.PagingData
 import com.example.homeworkAA.data.db.MoviesDatabase
 import com.example.homeworkAA.data.db.entities.ActorEntity
 import com.example.homeworkAA.data.db.entities.MovieEntity
-import com.example.homeworkAA.domain.models.Movie
 import com.example.homeworkAA.data.network.NetworkInterface
+import com.example.homeworkAA.domain.models.Movie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
@@ -25,7 +25,7 @@ class MoviesRepository(
             config = PagingConfig(
                 pageSize = 4,
                 prefetchDistance = NETWORK_PAGE_SIZE,
-                enablePlaceholders = false,
+                enablePlaceholders = false
             ),
             remoteMediator = MoviesRemoteMediator(networkInterface, database),
             pagingSourceFactory = { database.moviesDao().getMoviesPagingSource() }

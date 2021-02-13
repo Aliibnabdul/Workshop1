@@ -17,6 +17,7 @@ import com.example.homeworkAA.R
 import com.example.homeworkAA.data.db.entities.MovieEntity
 import com.example.homeworkAA.databinding.FragmentMoviesListBinding
 import com.example.homeworkAA.di.Injection
+import androidx.lifecycle.observe
 
 class FragmentMoviesList : Fragment() {
     private lateinit var binding: FragmentMoviesListBinding
@@ -82,9 +83,9 @@ class FragmentMoviesList : Fragment() {
             binding.progressBar.isVisible = loadState.source.refresh is LoadState.Loading
         }
 
-        moviesViewModel.liveDataPagingData.observe(viewLifecycleOwner, {
-            moviesListAdapter.submitData(viewLifecycleOwner.lifecycle, it)
-        })
+        moviesViewModel.liveDataPagingData.observe(viewLifecycleOwner) {
+            moviesListAdapter.submitData(lifecycle, it)
+        }
     }
 
     interface ClickListener {

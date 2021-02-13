@@ -12,17 +12,21 @@ object Injection {
     private lateinit var moviesRepository: MoviesRepository
     private lateinit var networkInterface: NetworkInterface
     private lateinit var database: MoviesDatabase
-    private lateinit var ListViewModelFactory: ListViewModelFactory
+    private lateinit var listViewModelFactory: ListViewModelFactory
 
     fun setup(context: Context) {
         networkInterface = NetworkInterface.getService()
         database = MoviesDatabase.getInstance(context)
         moviesRepository = MoviesRepository(networkInterface, database)
-        ListViewModelFactory = ListViewModelFactory(moviesRepository)
+        listViewModelFactory = ListViewModelFactory(moviesRepository)
+    }
+
+    fun provideNetworkInterface(): NetworkInterface {
+        return networkInterface
     }
 
     fun provideListViewModelFactory(): ViewModelProvider.Factory {
-        return ListViewModelFactory
+        return listViewModelFactory
     }
 
     fun provideDetailsViewModelFactory(id: Long): ViewModelProvider.Factory {
