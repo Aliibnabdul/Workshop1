@@ -7,7 +7,7 @@ import androidx.paging.PagingData
 import com.example.homeworkAA.data.db.MoviesDatabase
 import com.example.homeworkAA.data.db.entities.ActorEntity
 import com.example.homeworkAA.data.db.entities.MovieEntity
-import com.example.homeworkAA.data.network.NetworkInterface
+import com.example.homeworkAA.data.network.MoviesNetworkInterface
 import com.example.homeworkAA.domain.models.Movie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -16,7 +16,7 @@ import kotlinx.coroutines.withContext
 const val NETWORK_PAGE_SIZE = 8
 
 class MoviesRepository(
-    private val networkInterface: NetworkInterface,
+    private val networkInterface: MoviesNetworkInterface,
     private val database: MoviesDatabase
 ) {
     @ExperimentalPagingApi

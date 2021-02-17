@@ -5,10 +5,12 @@ import androidx.room.withTransaction
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.bumptech.glide.Glide
+import com.example.homeworkAA.MoviesConstants.STARTING_PAGE_INDEX
 import com.example.homeworkAA.R
 import com.example.homeworkAA.data.db.MoviesDatabase
 import com.example.homeworkAA.data.db.entities.MovieEntity
 import com.example.homeworkAA.data.db.entities.RemoteKeys
+import com.example.homeworkAA.data.network.dto.MovieDetailsRetriever
 import com.example.homeworkAA.di.Injection
 import com.example.homeworkAA.ui.notifications.NotificationsManager
 
@@ -18,19 +20,23 @@ class RefreshWorker(context: Context, workerParams: WorkerParameters) : Coroutin
     private val notificationsManager = NotificationsManager(applicationContext)
 
     override suspend fun doWork(): Result {
-        val resources = applicationContext.resources
-        notificationsManager.showNotification(resources.getString(R.string.refreshWorker_has_started))
+        notificationsManager.showNotification(applicationContext.getString(R.string.refreshWorker_has_started))
 
         return try {
             val currentQueryValue = "now_playing"
-            val page = 1
 
-            val resultsList = networkInterface.getMoviesListResponse(currentQueryValue, page).results
+            val resultsList = networkInterface.getMoviesListResponse(
+                currentQueryValue,
+                STARTING_PAGE_INDEX
+            ).results
             val endOfPaginationReached = resultsList.isEmpty()
 
-            val indexOfLastMovieInDb = 0
-            val moviesEntityList = resultsList.mapIndexed { index, movieDto ->
-                MovieEntity.fromDto(movieDto, index + indexOfLastMovieInDb + 1)
+            val domainMoviesList = resultsList.mapIndexed { index, movieDto ->
+                movieDto.toDomain(index + 1)
+            }
+
+            val moviesEntityList = domainMoviesList.map { movie ->
+                MovieEntity.fromDomain(movie)
             }
 
             moviesEntityList.forEach { movieEntity ->
@@ -43,38 +49,24 @@ class RefreshWorker(context: Context, workerParams: WorkerParameters) : Coroutin
                     .preload()
             }
 
-            val fullList = getMoviesListWithDetails(moviesEntityList)
+            val fullList = MovieDetailsRetriever.getMoviesListWithDetails(networkInterface, moviesEntityList)
 
             moviesDatabase.withTransaction {
-
                 moviesDatabase.remoteKeysDao().clearRemoteKeys()
                 moviesDatabase.moviesDao().clearList()
-
                 val prevKey = null
-                val nextKey = if (endOfPaginationReached) null else page + 1
+                val nextKey = if (endOfPaginationReached) null else STARTING_PAGE_INDEX + 1
                 val keys = resultsList.map {
                     RemoteKeys(repoId = it.id, prevKey = prevKey, nextKey = nextKey)
                 }
                 moviesDatabase.moviesDao().insertAll(fullList)
                 moviesDatabase.remoteKeysDao().insertAll(keys)
             }
-            notificationsManager.showNotification(resources.getString(R.string.movies_database_has_been_updated))
-
+            notificationsManager.showNotification(applicationContext.getString(R.string.movies_database_has_been_updated))
             Result.success()
         } catch (exception: Exception) {
-            notificationsManager.showNotification(resources.getString(R.string.refreshWorker_failed))
-
+            notificationsManager.showNotification(applicationContext.getString(R.string.refreshWorker_failed))
             Result.failure()
         }
     }
-
-    private suspend fun getMoviesListWithDetails(list: List<MovieEntity>): List<MovieEntity> {
-        list.forEach { movie ->
-            val response = networkInterface.getMovieDetailsResponse(movie.id)
-            movie.runtime = response.runtime ?: 0
-            movie.genres = response.genres.joinToString(separator = ", ") { it.name }
-        }
-        return list
-    }
-
 }

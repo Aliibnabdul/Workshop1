@@ -1,5 +1,6 @@
 package com.example.homeworkAA.ui.notifications
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -14,7 +15,6 @@ import com.example.homeworkAA.MoviesConstants
 import com.example.homeworkAA.MoviesConstants.CANCEL_WORK_ACTION
 import com.example.homeworkAA.MoviesConstants.NOTIFICATION_ID
 import com.example.homeworkAA.MoviesConstants.NOTIFICATION_INTENT_REQUEST_CODE
-import com.example.homeworkAA.MoviesConstants.NOTIFICATION_TITLE
 import com.example.homeworkAA.R
 
 class NotificationsManager(private val context: Context) {
@@ -23,8 +23,8 @@ class NotificationsManager(private val context: Context) {
 
     init {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = MoviesConstants.VERBOSE_NOTIFICATION_CHANNEL_NAME
-            val description = MoviesConstants.VERBOSE_NOTIFICATION_CHANNEL_DESCRIPTION
+            val name = context.getString(R.string.notification_channel_name)
+            val description = context.getString(R.string.notification_channel_description)
             val importance = NotificationManager.IMPORTANCE_HIGH
             val channel = NotificationChannel(MoviesConstants.CHANNEL_ID, name, importance)
             channel.description = description
@@ -35,31 +35,22 @@ class NotificationsManager(private val context: Context) {
     }
 
     fun showNotification(message: String) {
+        mNotificationManager.notify(NOTIFICATION_ID, createNotification(message))
+        registerActionsReceiver()
+    }
 
-        val openAppIntent = Intent(context, MainActivity::class.java)
-        openAppIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-
-        val contentIntent = PendingIntent.getActivity(
-            context,
-            NOTIFICATION_INTENT_REQUEST_CODE,
-            openAppIntent,
-            0
-        )
-
-        val builder = NotificationCompat.Builder(context, MoviesConstants.CHANNEL_ID)
+    private fun createNotification(message: String): Notification {
+        return NotificationCompat.Builder(context, MoviesConstants.CHANNEL_ID)
             .setAutoCancel(false)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setContentTitle(NOTIFICATION_TITLE)
+            .setSmallIcon(R.drawable.ic_work)
+            .setContentTitle(context.getString(R.string.notification_title))
             .setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setVibrate(LongArray(0))
-            .setContentIntent(contentIntent)
+            .setContentIntent(createOpenAppIntent())
             .setOngoing(true)
-            .addAction(notificationAction(CANCEL_WORK_ACTION))
-
-        mNotificationManager.notify(NOTIFICATION_ID, builder.build())
-
-        registerActionsReceiver()
+            .addAction(createNotificationAction(CANCEL_WORK_ACTION))
+            .build()
     }
 
     fun cancelNotifications() {
@@ -67,7 +58,19 @@ class NotificationsManager(private val context: Context) {
         unregisterActionsReceiver()
     }
 
-    private fun notificationAction(action: String): NotificationCompat.Action {
+    private fun createOpenAppIntent(): PendingIntent{
+        val openAppIntent = Intent(context, MainActivity::class.java)
+        openAppIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+
+        return PendingIntent.getActivity(
+            context,
+            NOTIFICATION_INTENT_REQUEST_CODE,
+            openAppIntent,
+            0
+        )
+    }
+
+    private fun createNotificationAction(action: String): NotificationCompat.Action {
         val icon = R.drawable.ic_clear
 
         val actionIntent = Intent().also {

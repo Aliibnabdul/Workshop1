@@ -16,7 +16,7 @@ import retrofit2.http.Query
 
 private const val API_KEY = "528872f1b83a56c38aafb7c9fd9dc105"
 
-interface NetworkInterface {
+interface MoviesNetworkInterface {
     @GET("movie/{query}")
     suspend fun getMoviesListResponse(
         @Path("query") query: String,
@@ -41,7 +41,7 @@ interface NetworkInterface {
 
     companion object {
         @Suppress("EXPERIMENTAL_API_USAGE")
-        fun getService(): NetworkInterface {
+        fun getService(): MoviesNetworkInterface {
             val json = Json {
                 ignoreUnknownKeys = true
             }
@@ -56,7 +56,7 @@ interface NetworkInterface {
                 .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
                 .build()
 
-            return retrofit.create(NetworkInterface::class.java)
+            return retrofit.create(MoviesNetworkInterface::class.java)
         }
     }
 }

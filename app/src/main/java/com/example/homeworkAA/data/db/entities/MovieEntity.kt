@@ -3,7 +3,7 @@ package com.example.homeworkAA.data.db.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.homeworkAA.data.network.dto.MovieDto
+import com.example.homeworkAA.domain.models.Movie
 
 @Entity(tableName = "movies_table")
 data class MovieEntity(
@@ -22,19 +22,19 @@ data class MovieEntity(
     var genres: String
 ) {
     companion object {
-        fun fromDto(movieDto: MovieDto, ind: Int): MovieEntity {
+        fun fromDomain(movie: Movie): MovieEntity {
             return MovieEntity(
-                index = ind,
-                id = movieDto.id,
-                title = movieDto.title,
-                overview = movieDto.overview,
-                posterUrl = "https://image.tmdb.org/t/p/w300${movieDto.posterPath}",
-                backdropUrl = "https://image.tmdb.org/t/p/w780${movieDto.backdropPath}",
-                ratings = movieDto.voteAverage / 2F,
-                numberOfRatings = movieDto.voteCount,
-                minimumAge = if (movieDto.adult) 16 else 13,
-                runtime = 0,
-                genres = ""
+                index = movie.index,
+                id = movie.id,
+                title = movie.title,
+                overview = movie.overview,
+                posterUrl = movie.posterUrl,
+                backdropUrl = movie.backdropUrl,
+                ratings = movie.ratings,
+                numberOfRatings = movie.numberOfRatings,
+                minimumAge = movie.minimumAge,
+                runtime = movie.runtime,
+                genres = movie.genres
             )
         }
     }
