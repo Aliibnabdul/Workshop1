@@ -30,8 +30,6 @@ class MainActivity : AppCompatActivity(), FragmentMoviesList.ClickListener {
                     commit()
                 }
         }
-
-        runWorkManager()
     }
 
     override fun moveToFragment(movie: MovieEntity) {
@@ -42,22 +40,5 @@ class MainActivity : AppCompatActivity(), FragmentMoviesList.ClickListener {
                 setReorderingAllowed(true)
                 commit()
             }
-    }
-
-    private fun runWorkManager() {
-        val workManager = WorkManager.getInstance(this)
-
-        val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.UNMETERED)
-            .setRequiresCharging(true)
-            .build()
-
-        val constrainedRequest = PeriodicWorkRequest.Builder(RefreshWorker::class.java, 8, TimeUnit.HOURS)
-            .setConstraints(constraints)
-            .addTag(WORK_TAG)
-            .setInitialDelay(8L, TimeUnit.HOURS)
-            .build()
-
-        workManager.enqueue(constrainedRequest)
     }
 }
