@@ -8,7 +8,7 @@ import androidx.work.WorkManager
 import com.example.homeworkAA.MoviesConstants.CANCEL_WORK_ACTION
 import com.example.homeworkAA.MoviesConstants.WORK_TAG
 
-class NotificationsReceiver : BroadcastReceiver() {
+class NotificationsReceiver(private val notificationsManager: NotificationsManager) : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
 
         when (intent.action) {
@@ -18,8 +18,7 @@ class NotificationsReceiver : BroadcastReceiver() {
                 val workManager = WorkManager.getInstance(context)
                 workManager.cancelAllWorkByTag(WORK_TAG)
 
-                val notificationManager = NotificationsManager(context)
-                notificationManager.cancelNotifications()
+                notificationsManager.cancelNotifications()
             }
         }
     }

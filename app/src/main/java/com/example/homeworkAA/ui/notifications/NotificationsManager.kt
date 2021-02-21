@@ -19,7 +19,7 @@ import com.example.homeworkAA.R
 
 class NotificationsManager(private val context: Context) {
     private val mNotificationManager = NotificationManagerCompat.from(context)
-    private val mNotificationsReceiver: NotificationsReceiver by lazy { NotificationsReceiver() }
+    private val mNotificationsReceiver: NotificationsReceiver by lazy { NotificationsReceiver(this) }
 
     init {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

@@ -2,17 +2,10 @@ package com.example.homeworkAA
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.work.Constraints
-import androidx.work.NetworkType
-import androidx.work.PeriodicWorkRequest
-import androidx.work.WorkManager
-import com.example.homeworkAA.MoviesConstants.WORK_TAG
 import com.example.homeworkAA.data.db.entities.MovieEntity
 import com.example.homeworkAA.databinding.ActivityMainBinding
 import com.example.homeworkAA.ui.movieDetails.FragmentMovieDetails
 import com.example.homeworkAA.ui.moviesList.FragmentMoviesList
-import com.example.homeworkAA.workers.RefreshWorker
-import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity(), FragmentMoviesList.ClickListener {
     private lateinit var binding: ActivityMainBinding

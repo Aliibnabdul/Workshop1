@@ -18,6 +18,7 @@ class RefreshWorker(context: Context, workerParams: WorkerParameters) : Coroutin
     private val networkInterface = Injection.provideNetworkInterface()
     private val moviesDatabase = MoviesDatabase.getInstance(applicationContext)
     private val notificationsManager = NotificationsManager(applicationContext)
+    private val movieDetailsRetriever = Injection.provideMovieDetailsRetriever()
 
     override suspend fun doWork(): Result {
         notificationsManager.showNotification(applicationContext.getString(R.string.refreshWorker_has_started))
@@ -39,17 +40,9 @@ class RefreshWorker(context: Context, workerParams: WorkerParameters) : Coroutin
                 MovieEntity.fromDomain(movie)
             }
 
-            moviesEntityList.forEach { movieEntity ->
-                Glide.with(applicationContext)
-                    .load(movieEntity.posterUrl)
-                    .preload()
+            preloadImages(moviesEntityList)
 
-                Glide.with(applicationContext)
-                    .load(movieEntity.backdropUrl)
-                    .preload()
-            }
-
-            val fullList = MovieDetailsRetriever.getMoviesListWithDetails(networkInterface, moviesEntityList)
+            val fullList = movieDetailsRetriever.getMoviesListWithDetails(moviesEntityList)
 
             moviesDatabase.withTransaction {
                 moviesDatabase.remoteKeysDao().clearRemoteKeys()
@@ -67,6 +60,18 @@ class RefreshWorker(context: Context, workerParams: WorkerParameters) : Coroutin
         } catch (exception: Exception) {
             notificationsManager.showNotification(applicationContext.getString(R.string.refreshWorker_failed))
             Result.failure()
+        }
+    }
+
+    private fun preloadImages(moviesEntityList: List<MovieEntity>){
+        moviesEntityList.forEach { movieEntity ->
+            Glide.with(applicationContext)
+                .load(movieEntity.posterUrl)
+                .preload()
+
+            Glide.with(applicationContext)
+                .load(movieEntity.backdropUrl)
+                .preload()
         }
     }
 }

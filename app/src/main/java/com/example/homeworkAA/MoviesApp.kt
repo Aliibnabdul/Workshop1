@@ -28,7 +28,8 @@ class MoviesApp : Application() {
         val constrainedRequest = PeriodicWorkRequest.Builder(RefreshWorker::class.java, 8, TimeUnit.HOURS)
             .setConstraints(constraints)
             .addTag(MoviesConstants.WORK_TAG)
-            .setInitialDelay(8L, TimeUnit.HOURS)
+//            .setInitialDelay(8L, TimeUnit.HOURS)
+            .setInitialDelay(10L, TimeUnit.SECONDS)
             .build()
 
         workManager.enqueue(constrainedRequest)

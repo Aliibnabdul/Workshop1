@@ -18,7 +18,8 @@ import java.io.IOException
 @ExperimentalPagingApi
 class MoviesRemoteMediator(
     private val networkInterface: MoviesNetworkInterface,
-    private val moviesDatabase: MoviesDatabase
+    private val moviesDatabase: MoviesDatabase,
+    private val movieDetailsRetriever: MovieDetailsRetriever
 ) : RemoteMediator<Int, MovieEntity>() {
 
     private val currentQueryValue = "now_playing"
@@ -60,7 +61,7 @@ class MoviesRemoteMediator(
             val moviesEntityList = domainMoviesList.map { movie ->
                 MovieEntity.fromDomain(movie)
             }
-            val fullList = MovieDetailsRetriever.getMoviesListWithDetails(networkInterface, moviesEntityList)
+            val fullList = movieDetailsRetriever.getMoviesListWithDetails(moviesEntityList)
 
             moviesDatabase.withTransaction {
                 if (loadType == LoadType.REFRESH) {

@@ -8,6 +8,7 @@ import com.example.homeworkAA.data.db.MoviesDatabase
 import com.example.homeworkAA.data.db.entities.ActorEntity
 import com.example.homeworkAA.data.db.entities.MovieEntity
 import com.example.homeworkAA.data.network.MoviesNetworkInterface
+import com.example.homeworkAA.data.network.dto.MovieDetailsRetriever
 import com.example.homeworkAA.domain.models.Movie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -17,7 +18,8 @@ const val NETWORK_PAGE_SIZE = 8
 
 class MoviesRepository(
     private val networkInterface: MoviesNetworkInterface,
-    private val database: MoviesDatabase
+    private val database: MoviesDatabase,
+    private val movieDetailsRetriever: MovieDetailsRetriever
 ) {
     @ExperimentalPagingApi
     fun getSearchResultStream(): Flow<PagingData<MovieEntity>> {
@@ -27,7 +29,7 @@ class MoviesRepository(
                 prefetchDistance = NETWORK_PAGE_SIZE,
                 enablePlaceholders = false
             ),
-            remoteMediator = MoviesRemoteMediator(networkInterface, database),
+            remoteMediator = MoviesRemoteMediator(networkInterface, database, movieDetailsRetriever),
             pagingSourceFactory = { database.moviesDao().getMoviesPagingSource() }
         ).flow
     }
