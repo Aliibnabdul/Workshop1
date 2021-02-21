@@ -6,19 +6,20 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
+import com.example.homeworkAA.MoviesConstants.STARTING_PAGE_INDEX
 import com.example.homeworkAA.data.db.MoviesDatabase
 import com.example.homeworkAA.data.db.entities.MovieEntity
 import com.example.homeworkAA.data.db.entities.RemoteKeys
-import com.example.homeworkAA.data.network.NetworkInterface
+import com.example.homeworkAA.data.network.MoviesNetworkInterface
+import com.example.homeworkAA.data.network.dto.MovieDetailsRetriever
 import retrofit2.HttpException
 import java.io.IOException
 
-private const val GITHUB_STARTING_PAGE_INDEX = 1
-
 @ExperimentalPagingApi
 class MoviesRemoteMediator(
-    private val networkInterface: NetworkInterface,
-    private val moviesDatabase: MoviesDatabase
+    private val networkInterface: MoviesNetworkInterface,
+    private val moviesDatabase: MoviesDatabase,
+    private val movieDetailsRetriever: MovieDetailsRetriever
 ) : RemoteMediator<Int, MovieEntity>() {
 
     private val currentQueryValue = "now_playing"
@@ -31,7 +32,7 @@ class MoviesRemoteMediator(
         val page = when (loadType) {
             LoadType.REFRESH -> {
                 val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
-                remoteKeys?.nextKey?.minus(1) ?: GITHUB_STARTING_PAGE_INDEX
+                remoteKeys?.nextKey?.minus(1) ?: STARTING_PAGE_INDEX
             }
             LoadType.APPEND -> {
                 getRemoteKeyFromLastItem(state)?.nextKey
@@ -47,23 +48,29 @@ class MoviesRemoteMediator(
         try {
             val indexOfLastMovieInDb =
                 state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()?.index ?: 0
+            Log.d("INDEX_TAG", "indexOfLastMovieInDb $indexOfLastMovieInDb")
 
             val resultsList =
                 networkInterface.getMoviesListResponse(currentQueryValue, page).results
             val endOfPaginationReached = resultsList.isEmpty()
 
-            val moviesEntityList = resultsList.mapIndexed { index, movieDto ->
-                MovieEntity.fromDto(movieDto, index + indexOfLastMovieInDb + 1)
+            val domainMoviesList = resultsList.mapIndexed { index, movieDto ->
+                movieDto.toDomain(index + indexOfLastMovieInDb + 1)
             }
-            val fullList = getMoviesListWithDetails(moviesEntityList)
+
+            val moviesEntityList = domainMoviesList.map { movie ->
+                MovieEntity.fromDomain(movie)
+            }
+            val fullList = movieDetailsRetriever.getMoviesListWithDetails(moviesEntityList)
 
             moviesDatabase.withTransaction {
                 if (loadType == LoadType.REFRESH) {
                     moviesDatabase.remoteKeysDao().clearRemoteKeys()
                     moviesDatabase.moviesDao().clearList()
                 }
-                val prevKey = if (page == GITHUB_STARTING_PAGE_INDEX) null else page - 1
+                val prevKey = if (page == STARTING_PAGE_INDEX) null else page - 1
                 val nextKey = if (endOfPaginationReached) null else page + 1
+                Log.d("LOADTYPE_TAG", "nextKey $nextKey")
                 val keys = resultsList.map {
                     RemoteKeys(repoId = it.id, prevKey = prevKey, nextKey = nextKey)
                 }
@@ -90,14 +97,5 @@ class MoviesRemoteMediator(
         return state.lastItemOrNull()?.let { movie ->
             moviesDatabase.remoteKeysDao().remoteKeysRepoId(movie.id)
         }
-    }
-
-    private suspend fun getMoviesListWithDetails(list: List<MovieEntity>): List<MovieEntity> {
-        list.forEach { movie ->
-            val response = networkInterface.getMovieDetailsResponse(movie.id)
-            movie.runtime = response.runtime ?: 0
-            movie.genres = response.genres.joinToString(separator = ", ") { it.name }
-        }
-        return list
     }
 }

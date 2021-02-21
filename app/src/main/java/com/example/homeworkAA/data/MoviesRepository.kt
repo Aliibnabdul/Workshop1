@@ -7,8 +7,9 @@ import androidx.paging.PagingData
 import com.example.homeworkAA.data.db.MoviesDatabase
 import com.example.homeworkAA.data.db.entities.ActorEntity
 import com.example.homeworkAA.data.db.entities.MovieEntity
+import com.example.homeworkAA.data.network.MoviesNetworkInterface
+import com.example.homeworkAA.data.network.dto.MovieDetailsRetriever
 import com.example.homeworkAA.domain.models.Movie
-import com.example.homeworkAA.data.network.NetworkInterface
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
@@ -16,8 +17,9 @@ import kotlinx.coroutines.withContext
 const val NETWORK_PAGE_SIZE = 8
 
 class MoviesRepository(
-    private val networkInterface: NetworkInterface,
-    private val database: MoviesDatabase
+    private val networkInterface: MoviesNetworkInterface,
+    private val database: MoviesDatabase,
+    private val movieDetailsRetriever: MovieDetailsRetriever
 ) {
     @ExperimentalPagingApi
     fun getSearchResultStream(): Flow<PagingData<MovieEntity>> {
@@ -25,9 +27,9 @@ class MoviesRepository(
             config = PagingConfig(
                 pageSize = 4,
                 prefetchDistance = NETWORK_PAGE_SIZE,
-                enablePlaceholders = false,
+                enablePlaceholders = false
             ),
-            remoteMediator = MoviesRemoteMediator(networkInterface, database),
+            remoteMediator = MoviesRemoteMediator(networkInterface, database, movieDetailsRetriever),
             pagingSourceFactory = { database.moviesDao().getMoviesPagingSource() }
         ).flow
     }

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.observe
 import com.bumptech.glide.Glide
 import com.example.homeworkAA.R
 import com.example.homeworkAA.domain.models.Movie
@@ -29,9 +30,9 @@ class FragmentMovieDetails : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        movieDetailsViewModel.movieLiveData.observe(viewLifecycleOwner, {
+        movieDetailsViewModel.movieLiveData.observe(viewLifecycleOwner) {
             initViews(it)
-        })
+        }
     }
 
     private fun initViews(movie: Movie) {
