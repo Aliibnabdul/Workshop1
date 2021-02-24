@@ -35,7 +35,6 @@ class MoviesRepository(
     }
 
     suspend fun getMovieWithActors(id: Long): Movie = withContext(Dispatchers.IO) {
-
         try {
             val actors =
                 networkInterface.getCastResponse(id).cast.filterNot { it.profilePath == null }

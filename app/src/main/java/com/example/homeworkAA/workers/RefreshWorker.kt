@@ -42,6 +42,20 @@ class RefreshWorker(context: Context, workerParams: WorkerParameters) : Coroutin
 
             preloadImages(moviesEntityList)
 
+            val dbList = moviesDatabase.moviesDao().getMovies()
+            var newOrTopRatedMovieId = moviesEntityList.maxByOrNull { it.ratings }?.id
+            var message = applicationContext.getString(R.string.database_updated_tap_to_top_rated_movie)
+
+            if (dbList.isNotEmpty()) {
+                moviesEntityList.forEach { movieEntity ->
+                    if (dbList.find { movieEntity.id == it.id } == null) {
+                        newOrTopRatedMovieId = movieEntity.id
+                        message = applicationContext.getString(R.string.database_updated_tap_to_new_movie)
+                        return@forEach
+                    }
+                }
+            }
+
             val fullList = movieDetailsRetriever.getMoviesListWithDetails(moviesEntityList)
 
             moviesDatabase.withTransaction {
@@ -55,7 +69,10 @@ class RefreshWorker(context: Context, workerParams: WorkerParameters) : Coroutin
                 moviesDatabase.moviesDao().insertAll(fullList)
                 moviesDatabase.remoteKeysDao().insertAll(keys)
             }
-            notificationsManager.showNotification(applicationContext.getString(R.string.movies_database_has_been_updated))
+            notificationsManager.showNotification(
+                message,
+                newOrTopRatedMovieId
+            )
             Result.success()
         } catch (exception: Exception) {
             notificationsManager.showNotification(applicationContext.getString(R.string.refreshWorker_failed))

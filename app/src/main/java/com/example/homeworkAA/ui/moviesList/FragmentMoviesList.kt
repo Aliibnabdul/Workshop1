@@ -17,7 +17,6 @@ import com.example.homeworkAA.R
 import com.example.homeworkAA.data.db.entities.MovieEntity
 import com.example.homeworkAA.databinding.FragmentMoviesListBinding
 import com.example.homeworkAA.di.Injection
-import androidx.lifecycle.observe
 
 class FragmentMoviesList : Fragment() {
     private lateinit var binding: FragmentMoviesListBinding

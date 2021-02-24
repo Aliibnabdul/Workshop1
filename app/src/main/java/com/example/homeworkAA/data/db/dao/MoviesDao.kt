@@ -14,6 +14,9 @@ interface MoviesDao {
     @Query("SELECT * from movies_table")
     fun getMoviesPagingSource(): PagingSource<Int, MovieEntity>
 
+    @Query("SELECT * FROM movies_table")
+    fun getMovies(): List<MovieEntity>
+
     @Query("SELECT * FROM movies_table WHERE id == :id")
     suspend fun getMovie(id: Long): MovieEntity
 

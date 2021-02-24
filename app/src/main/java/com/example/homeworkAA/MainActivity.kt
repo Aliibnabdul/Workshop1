@@ -1,5 +1,6 @@
 package com.example.homeworkAA
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.homeworkAA.data.db.entities.MovieEntity
@@ -22,16 +23,37 @@ class MainActivity : AppCompatActivity(), FragmentMoviesList.ClickListener {
                     setReorderingAllowed(true)
                     commit()
                 }
+            intent?.let(::handleIntent)
+        }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        if (intent != null) {
+            handleIntent(intent)
         }
     }
 
     override fun moveToFragment(movie: MovieEntity) {
+        moveToFragment(movie.id)
+    }
+
+    private fun moveToFragment(id: Long) {
         supportFragmentManager.beginTransaction()
             .apply {
-                replace(R.id.fragments_container, FragmentMovieDetails.newInstance(movie.id))
+                replace(R.id.fragments_container, FragmentMovieDetails.newInstance(id))
                 addToBackStack(null)
                 setReorderingAllowed(true)
                 commit()
             }
+    }
+
+    private fun handleIntent(intent: Intent) {
+        when (intent.action) {
+            Intent.ACTION_VIEW -> {
+                val id = intent.data?.lastPathSegment?.toLongOrNull()
+                id?.let { moveToFragment(id) }
+            }
+        }
     }
 }
