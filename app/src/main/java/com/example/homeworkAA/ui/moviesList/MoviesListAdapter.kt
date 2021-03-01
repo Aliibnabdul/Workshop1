@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import com.example.homeworkAA.data.db.entities.MovieEntity
 import com.example.homeworkAA.databinding.ViewHolderMovieBinding
 
-class MoviesListAdapter(private val listener: (MovieEntity) -> Unit) :
+class MoviesListAdapter(private val listener: (MovieEntity, Int) -> Unit) :
     PagingDataAdapter<MovieEntity, MoviesListViewHolder>(DIFF_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesListViewHolder {
@@ -19,7 +19,6 @@ class MoviesListAdapter(private val listener: (MovieEntity) -> Unit) :
             ),
             listener
         )
-
     }
 
     override fun onBindViewHolder(holder: MoviesListViewHolder, position: Int) {

@@ -25,9 +25,8 @@ class MoviesRepository(
     fun getSearchResultStream(): Flow<PagingData<MovieEntity>> {
         return Pager(
             config = PagingConfig(
-                pageSize = 4,
-                prefetchDistance = NETWORK_PAGE_SIZE,
-                enablePlaceholders = false
+                pageSize = NETWORK_PAGE_SIZE,
+                enablePlaceholders = false,
             ),
             remoteMediator = MoviesRemoteMediator(networkInterface, database, movieDetailsRetriever),
             pagingSourceFactory = { database.moviesDao().getMoviesPagingSource() }
@@ -35,7 +34,6 @@ class MoviesRepository(
     }
 
     suspend fun getMovieWithActors(id: Long): Movie = withContext(Dispatchers.IO) {
-
         try {
             val actors =
                 networkInterface.getCastResponse(id).cast.filterNot { it.profilePath == null }
@@ -45,7 +43,6 @@ class MoviesRepository(
             database.actorsDao().insertActors(actorsEntityList)
         } catch (e: Exception) {
         }
-        val movieWithActors = database.moviesDao().getMovieWithActors(id)
-        return@withContext movieWithActors.toDomain()
+        return@withContext database.moviesDao().getMovieWithActors(id).toDomain()
     }
 }

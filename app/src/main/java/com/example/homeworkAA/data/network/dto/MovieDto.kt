@@ -1,6 +1,5 @@
 package com.example.homeworkAA.data.network.dto
 
-import com.example.homeworkAA.data.db.entities.ActorEntity
 import com.example.homeworkAA.domain.models.Movie
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

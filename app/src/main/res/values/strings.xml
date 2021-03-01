@@ -15,10 +15,15 @@
     <string name="retry">Retry</string>
     <string name="check_internet_connection">Check internet connection!</string>
     <string name="refreshWorker_has_started">RefreshWorker has started</string>
-    <string name="movies_database_has_been_updated">Movies database has been updated. Tap to open app</string>
+    <string name="database_updated_tap_to_new_movie">Movies database has been updated. Tap to open new movie</string>
+    <string name="database_updated_tap_to_top_rated_movie">Movies database has been updated. Tap to open top rated movie</string>
     <string name="refreshWorker_failed">RefreshWorker failed</string>
     <string name="notification_channel_name">WorkManager notifications</string>
     <string name="notification_channel_description">Shows notifications about WorkManager states</string>
     <string name="notification_title">Refresh worker</string>
+    <string name="schedule_to_the_calendar">Schedule to the calendar</string>
+    <string name="tap_to_schedule_date">Tap to schedule date</string>
+    <string name="tap_to_schedule_time">Tap to schedule time</string>
+
 
 </resources>

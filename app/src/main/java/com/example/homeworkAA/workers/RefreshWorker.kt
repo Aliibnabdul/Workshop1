@@ -10,7 +10,6 @@ import com.example.homeworkAA.R
 import com.example.homeworkAA.data.db.MoviesDatabase
 import com.example.homeworkAA.data.db.entities.MovieEntity
 import com.example.homeworkAA.data.db.entities.RemoteKeys
-import com.example.homeworkAA.data.network.dto.MovieDetailsRetriever
 import com.example.homeworkAA.di.Injection
 import com.example.homeworkAA.ui.notifications.NotificationsManager
 
@@ -25,37 +24,59 @@ class RefreshWorker(context: Context, workerParams: WorkerParameters) : Coroutin
 
         return try {
             val currentQueryValue = "now_playing"
+            val moviesListResponse =
+                networkInterface.getMoviesListResponse(currentQueryValue, STARTING_PAGE_INDEX)
+            val resultsList = moviesListResponse.results
 
-            val resultsList = networkInterface.getMoviesListResponse(
-                currentQueryValue,
-                STARTING_PAGE_INDEX
-            ).results
-            val endOfPaginationReached = resultsList.isEmpty()
-
-            val domainMoviesList = resultsList.mapIndexed { index, movieDto ->
-                movieDto.toDomain(index + 1)
+            moviesDatabase.withTransaction {
+                moviesDatabase.remoteKeysDao().clearRemoteKeys()
+                moviesDatabase.moviesDao().clearList()
             }
 
-            val moviesEntityList = domainMoviesList.map { movie ->
+            val moviesDomainList = resultsList.mapIndexed { index, movieDto ->
+                movieDto.toDomain(index + 1)
+            }
+            val moviesEntityList = moviesDomainList.map { movie ->
                 MovieEntity.fromDomain(movie)
             }
 
             preloadImages(moviesEntityList)
 
-            val fullList = movieDetailsRetriever.getMoviesListWithDetails(moviesEntityList)
+            var message = ""
+            var newOrTopRatedMovieId: Long? = null
+
+            val dbList = moviesDatabase.moviesDao().getMovies()
+            if (dbList.isNotEmpty()) {
+                moviesEntityList.forEach { movieEntity ->
+                    if (dbList.find { movieEntity.id == it.id } == null) {
+                        newOrTopRatedMovieId = movieEntity.id
+                        message = applicationContext.getString(R.string.database_updated_tap_to_new_movie)
+                        return@forEach
+                    }
+                }
+            }
+
+            val listWithDetails = movieDetailsRetriever.getMoviesListWithDetails(moviesEntityList)
+
+            val nextKey = moviesListResponse.page + 1
+            val lastIndexOfNewPage = listWithDetails.last().index
 
             moviesDatabase.withTransaction {
-                moviesDatabase.remoteKeysDao().clearRemoteKeys()
-                moviesDatabase.moviesDao().clearList()
-                val prevKey = null
-                val nextKey = if (endOfPaginationReached) null else STARTING_PAGE_INDEX + 1
-                val keys = resultsList.map {
-                    RemoteKeys(repoId = it.id, prevKey = prevKey, nextKey = nextKey)
-                }
-                moviesDatabase.moviesDao().insertAll(fullList)
-                moviesDatabase.remoteKeysDao().insertAll(keys)
+                moviesDatabase.moviesDao().insertAll(listWithDetails)
+                moviesDatabase.remoteKeysDao().saveRemoteKeys(
+                    RemoteKeys(0, lastDbIndex = lastIndexOfNewPage, nextKey = nextKey)
+                )
             }
-            notificationsManager.showNotification(applicationContext.getString(R.string.movies_database_has_been_updated))
+
+            if (newOrTopRatedMovieId == null) {
+                newOrTopRatedMovieId = moviesDatabase.moviesDao().getTopRatedMovie()?.id
+                message = applicationContext.getString(R.string.database_updated_tap_to_top_rated_movie)
+            }
+
+            notificationsManager.showNotification(
+                message,
+                newOrTopRatedMovieId
+            )
             Result.success()
         } catch (exception: Exception) {
             notificationsManager.showNotification(applicationContext.getString(R.string.refreshWorker_failed))
@@ -63,7 +84,7 @@ class RefreshWorker(context: Context, workerParams: WorkerParameters) : Coroutin
         }
     }
 
-    private fun preloadImages(moviesEntityList: List<MovieEntity>){
+    private fun preloadImages(moviesEntityList: List<MovieEntity>) {
         moviesEntityList.forEach { movieEntity ->
             Glide.with(applicationContext)
                 .load(movieEntity.posterUrl)
