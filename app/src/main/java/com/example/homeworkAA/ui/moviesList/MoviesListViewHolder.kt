@@ -9,7 +9,7 @@ import com.example.homeworkAA.databinding.ViewHolderMovieBinding
 
 class MoviesListViewHolder(
     private val binding: ViewHolderMovieBinding,
-    private val listener: (MovieEntity) -> Unit
+    private val listener: (MovieEntity, Int) -> Unit
 ) :
     RecyclerView.ViewHolder(binding.root) {
     private val resources: Resources = binding.root.resources
@@ -28,7 +28,9 @@ class MoviesListViewHolder(
             tvRuntime.text = resources.getString(R.string.movies_list_minutes, movie.runtime)
         }
         setLikedState(false)
-        itemView.setOnClickListener { listener(movie) }
+        itemView.setOnClickListener {
+            listener(movie, absoluteAdapterPosition)
+        }
     }
 
     private fun setLikedState(liked: Boolean) {

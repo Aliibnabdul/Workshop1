@@ -10,6 +10,7 @@ import android.content.IntentFilter
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.net.toUri
 import com.example.homeworkAA.MainActivity
 import com.example.homeworkAA.MoviesConstants
@@ -22,18 +23,6 @@ import com.example.homeworkAA.R
 class NotificationsManager(private val context: Context) {
     private val mNotificationManager = NotificationManagerCompat.from(context)
     private val mNotificationsReceiver: NotificationsReceiver by lazy { NotificationsReceiver(this) }
-
-    init {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                CHANNEL_ID,
-                context.getString(R.string.notification_channel_name),
-                NotificationManager.IMPORTANCE_HIGH
-            )
-            channel.description = context.getString(R.string.notification_channel_description)
-            mNotificationManager.createNotificationChannel(channel)
-        }
-    }
 
     fun showNotification(message: String, movieId: Long? = null) {
         mNotificationManager.notify(NOTIFICATION_ID, createNotification(message, movieId))

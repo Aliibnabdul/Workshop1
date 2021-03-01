@@ -20,7 +20,7 @@ interface MoviesNetworkInterface {
     @GET("movie/{query}")
     suspend fun getMoviesListResponse(
         @Path("query") query: String,
-        @Query("page") page: Int,
+        @Query("page") page: Int? = null,
         @Query("api_key") apiKey: String = API_KEY,
         @Query("language") language: String = "en-US"
     ): MoviesListResponse

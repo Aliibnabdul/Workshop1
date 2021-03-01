@@ -29,9 +29,7 @@ class MainActivity : AppCompatActivity(), FragmentMoviesList.ClickListener {
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        if (intent != null) {
-            handleIntent(intent)
-        }
+        intent?.let(::handleIntent)
     }
 
     override fun moveToFragment(movie: MovieEntity) {
@@ -52,7 +50,7 @@ class MainActivity : AppCompatActivity(), FragmentMoviesList.ClickListener {
         when (intent.action) {
             Intent.ACTION_VIEW -> {
                 val id = intent.data?.lastPathSegment?.toLongOrNull()
-                id?.let { moveToFragment(id) }
+                id?.let(::moveToFragment)
             }
         }
     }

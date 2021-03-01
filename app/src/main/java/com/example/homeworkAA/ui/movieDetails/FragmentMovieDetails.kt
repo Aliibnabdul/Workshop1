@@ -36,7 +36,6 @@ class FragmentMovieDetails : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         movieDetailsViewModel.movieLiveData.observe(viewLifecycleOwner) {
             initViews(it)
-            initScheduleBlock(it)
         }
     }
 
@@ -62,99 +61,50 @@ class FragmentMovieDetails : Fragment() {
                 rvCast.adapter = CastListAdapter(movie.actors)
                 View.VISIBLE
             }
-
-
+            buttonSchedule.setOnClickListener {
+                pickDateTimeAndSchedule(movie)
+            }
         }
     }
 
-    private fun initScheduleBlock(movie: Movie) {
-        var scheduleYear = 0
-        var scheduleMonth = 0
-        var scheduleDay = 0
-        var scheduleHour = 0
-        var scheduleMinute = 0
+    private fun pickDateTimeAndSchedule(movie: Movie) {
+        val currentDateTime = Calendar.getInstance()
+        val currentYear = currentDateTime.get(Calendar.YEAR)
+        val currentMonth = currentDateTime.get(Calendar.MONTH)
+        val currentDay = currentDateTime.get(Calendar.DAY_OF_MONTH)
+        val currentHour = currentDateTime.get(Calendar.HOUR_OF_DAY)
+        val currentMinute = currentDateTime.get(Calendar.MINUTE)
 
-        binding.apply {
-            buttonSchedule.setOnClickListener {
-                tvScheduleDate.visibility = View.VISIBLE
-                tvScheduleTime.visibility = View.VISIBLE
-
-                if (scheduleYear != 0 &&
-                    scheduleMonth != 0 &&
-                    scheduleDay != 0 &&
-                    scheduleHour != 0 &&
-                    scheduleMinute != 0
-                ) {
-                    val startMillis: Long = Calendar.getInstance().run {
-                        set(scheduleYear, scheduleMonth, scheduleDay, scheduleHour, scheduleMinute)
-                        timeInMillis
-                    }
-                    val endMillis: Long = Calendar.getInstance().run {
-                        set(
-                            scheduleYear,
-                            scheduleMonth,
-                            scheduleDay,
-                            scheduleHour,
-                            scheduleMinute + 20
-                        )
-                        timeInMillis
-                    }
-                    val intent = Intent(Intent.ACTION_INSERT)
-                        .setData(CalendarContract.Events.CONTENT_URI)
-                        .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startMillis)
-                        .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endMillis)
-                        .putExtra(CalendarContract.Events.TITLE, "Cinema")
-                        .putExtra(CalendarContract.Events.DESCRIPTION, movie.title)
-                        .putExtra(CalendarContract.Events.EVENT_LOCATION, "Silver screen")
-                        .putExtra(
-                            CalendarContract.Events.AVAILABILITY,
-                            CalendarContract.Events.AVAILABILITY_BUSY
-                        )
-                        .putExtra(Intent.EXTRA_EMAIL, "ira@example.com, svetka@example.com")
-                    startActivity(intent)
+        DatePickerDialog(requireContext(), { _, year, month, day ->
+            TimePickerDialog(requireContext(), { _, hour, minute ->
+                val startDateTime: Long = Calendar.getInstance().run {
+                    set(year, month, day, hour, minute)
+                    timeInMillis
                 }
-            }
+                val endDateTime: Long = Calendar.getInstance().run {
+                    set(year, month, day, hour, minute + 20)
+                    timeInMillis
+                }
+                startCalendar(startDateTime, endDateTime, movie)
 
-            tvScheduleDate.setOnClickListener {
-                val c = Calendar.getInstance()
-                val year = c.get(Calendar.YEAR)
-                val month = c.get(Calendar.MONTH)
-                val day = c.get(Calendar.DAY_OF_MONTH)
+            }, currentHour, currentMinute, false).show()
+        }, currentYear, currentMonth, currentDay).show()
+    }
 
-                DatePickerDialog(
-                    requireContext(),
-                    { p0, p1, p2, p3 ->
-                        scheduleYear = p1
-                        scheduleMonth = p2 + 1
-                        scheduleDay = p3
-                        val dateString = "$scheduleDay . $scheduleMonth . $scheduleYear"
-                        tvScheduleDate.text = dateString
-                    },
-                    year,
-                    month,
-                    day
-                ).show()
-            }
-
-            tvScheduleTime.setOnClickListener {
-                val c = Calendar.getInstance()
-                val hour = c.get(Calendar.HOUR_OF_DAY)
-                val minute = c.get(Calendar.MINUTE)
-
-                TimePickerDialog(
-                    requireContext(),
-                    { p1, p2, p3 ->
-                        scheduleHour = p2
-                        scheduleMinute = p3
-                        val timeString = "$scheduleHour : $scheduleMinute"
-                        tvScheduleTime.text = timeString
-                    },
-                    hour,
-                    minute,
-                    true
-                ).show()
-            }
-        }
+    private fun startCalendar(startDateTime: Long, endDateTime: Long, movie: Movie) {
+        val intent = Intent(Intent.ACTION_INSERT)
+            .setData(CalendarContract.Events.CONTENT_URI)
+            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startDateTime)
+            .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endDateTime)
+            .putExtra(CalendarContract.Events.TITLE, "Cinema")
+            .putExtra(CalendarContract.Events.DESCRIPTION, movie.title)
+            .putExtra(CalendarContract.Events.EVENT_LOCATION, "Silver screen")
+            .putExtra(
+                CalendarContract.Events.AVAILABILITY,
+                CalendarContract.Events.AVAILABILITY_BUSY
+            )
+            .putExtra(Intent.EXTRA_EMAIL, "ira@example.com, svetka@example.com")
+        startActivity(intent)
     }
 
     companion object {

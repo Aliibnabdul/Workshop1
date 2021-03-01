@@ -15,10 +15,10 @@ interface MoviesDao {
     fun getMoviesPagingSource(): PagingSource<Int, MovieEntity>
 
     @Query("SELECT * FROM movies_table")
-    fun getMovies(): List<MovieEntity>
+    suspend fun getMovies(): List<MovieEntity>
 
-    @Query("SELECT * FROM movies_table WHERE id == :id")
-    suspend fun getMovie(id: Long): MovieEntity
+    @Query("SELECT * FROM movies_table WHERE ratings == (SELECT max(ratings) FROM movies_table)")
+    suspend fun getTopRatedMovie(): MovieEntity?
 
     @Query("DELETE FROM movies_table")
     suspend fun clearList()

@@ -23,8 +23,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
-                    android:host="themoviedb.org"
-                    android:pathPattern="/movie/.*"
+                    android:host="www.themoviedb.org"
+                    android:pathPrefix="/movie"
                     android:scheme="https" />
             </intent-filter>
         </activity>

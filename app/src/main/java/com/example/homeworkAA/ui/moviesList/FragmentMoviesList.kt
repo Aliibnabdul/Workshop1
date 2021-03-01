@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,40 +52,61 @@ class FragmentMoviesList : Fragment() {
             else -> 3
         }
 
-        val moviesListAdapter = MoviesListAdapter(listener::moveToFragment)
+        val moviesListAdapter = MoviesListAdapter(::onRecyclerItemClick)
         val recyclerLayoutManager = GridLayoutManager(requireContext(), recyclerColumns)
 
         binding.rvMovies.apply {
             layoutManager = recyclerLayoutManager
-            adapter = moviesListAdapter.withLoadStateHeaderAndFooter(
-                header = LoadingStateAdapter { moviesListAdapter.retry() },
-                footer = LoadingStateAdapter { moviesListAdapter.retry() }
-            )
+            adapter = moviesListAdapter
+                .withLoadStateHeaderAndFooter(
+                    header = LoadingStateAdapter { moviesListAdapter.retry() },
+                    footer = LoadingStateAdapter { moviesListAdapter.retry() }
+                )
         }
 
+        var isAlertWasShown = false
         moviesListAdapter.addLoadStateListener { loadState ->
-            when (loadState.source.refresh) {
+            Log.d("LOADSTATE_TAG", "loadState.mediator?.refresh: ${loadState.mediator?.refresh}")
+            when (loadState.mediator?.refresh) {
                 is LoadState.NotLoading -> {
                 }
                 is LoadState.Loading -> {
+                    isAlertWasShown = false
                 }
                 is LoadState.Error -> {
-                    AlertDialog.Builder(requireContext())
-                        .setMessage(getString(R.string.check_internet_connection))
-                        .setPositiveButton(getString(R.string.retry)) { _, _ ->
-                            moviesListAdapter.retry()
-                        }
-                        .setCancelable(false)
-                        .show()
+                    if (!isAlertWasShown){
+                        isAlertWasShown = true
+                        AlertDialog.Builder(requireContext())
+                            .setMessage(getString(R.string.check_internet_connection))
+                            .setPositiveButton(getString(R.string.retry)) { _, _ ->
+                                moviesListAdapter.retry()
+                            }
+                            .setCancelable(true)
+                            .show()
+                    }
                 }
             }
 
-            binding.progressBar.isVisible = loadState.source.refresh is LoadState.Loading
+            binding.apply {
+                progressBar.isVisible = loadState.mediator?.refresh is LoadState.Loading
+                rvMovies.isVisible = loadState.mediator?.refresh !is LoadState.Loading
+            }
         }
 
-        moviesViewModel.liveDataPagingData.observe(viewLifecycleOwner) {
+        moviesViewModel.liveDataPaging.observe(viewLifecycleOwner) {
             moviesListAdapter.submitData(lifecycle, it)
         }
+
+        moviesViewModel.liveDataPosition.observe(viewLifecycleOwner) {
+            Log.d("OBSERVER_TAG", "position $it")
+            binding.rvMovies.scrollToPosition(it)
+        }
+    }
+
+    @ExperimentalPagingApi
+    private fun onRecyclerItemClick(movie: MovieEntity, pos: Int) {
+        moviesViewModel.savePosition(pos)
+        listener.moveToFragment(movie)
     }
 
     interface ClickListener {
